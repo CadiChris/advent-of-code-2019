@@ -47,19 +47,19 @@ describe("Jour 2", () => {
     expect(resultat.programme[0]).toBe(3409710);
   });
 
-  function testerInputs(nom, verbe) {
-    const programmeAvantIncident = input.split(",").map(Number);
-    programmeAvantIncident[1] = nom;
-    programmeAvantIncident[2] = verbe;
-    return executer(programmeAvantIncident);
-  }
-
   it("trouve la solution - part 2", () => {
+    function testerInputs(nom, verbe) {
+      const programmeAvantIncident = input.split(",").map(Number);
+      programmeAvantIncident[1] = nom;
+      programmeAvantIncident[2] = verbe;
+      return executer(programmeAvantIncident);
+    }
+
     for (let nom = 0; nom <= 99; nom++)
       for (let verbe = 0; verbe <= 99; verbe++) {
         const resultat = testerInputs(nom, verbe);
         if (resultat.programme[0] === 19690720)
-          throw Error(`La solution est ${100 * nom + verbe}`); // 7912
+          console.log(`La solution est ${100 * nom + verbe}. ${nom} ${verbe}`); // 7912. 79 12
       }
   });
 });
