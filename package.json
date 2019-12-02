@@ -1,0 +1,30 @@
+{
+  "name": "advent-of-code-2019",
+  "version": "1.0.0",
+  "repository": {},
+  "license": "MIT",
+  "author": "Christophe Cadilhac",
+  "scripts": {
+    "test": "jest",
+    "pretty": "pretty-quick"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.7.4",
+    "babel-cli": "^6.26.0",
+    "babel-jest": "^24.9.0",
+    "husky": "^3.1.0",
+    "jest": "^24.9.0",
+    "prettier": "1.19.1",
+    "pretty-quick": "^2.0.1"
+  }
+}
