@@ -32,10 +32,15 @@ export function range(nombre) {
 }
 
 export function intersections(parcoursA, parcoursB) {
+  const cle = ({ x, y }) => `${x},${y}`;
+
+  const parcoursBMap = new Map();
+  parcoursB.map(coord => parcoursBMap.set(cle(coord), coord));
+
+  const estDansParcoursB = coord => parcoursBMap.has(cle(coord));
+
   return parcoursA
-    .filter(({ x: xA, y: yA }) =>
-      parcoursB.find(({ x: xB, y: yB }) => xA === xB && yA === yB)
-    )
+    .filter(estDansParcoursB)
     .filter(({ x, y }) => x !== 0 || y !== 0);
 }
 
