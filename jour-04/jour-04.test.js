@@ -11,4 +11,10 @@ describe("critères de mot de passe", () => {
     expect(criteres.chiffresAdacents(112345)).toBe(true);
     expect(criteres.chiffresAdacents(192345)).toBe(false);
   });
+
+  it("valide si tous les chiffres croissent ou reste égaux", () => {
+    expect(criteres.chiffresEgauxOuCroissent(12)).toBe(true);
+    expect(criteres.chiffresEgauxOuCroissent(1111)).toBe(true);
+    expect(criteres.chiffresEgauxOuCroissent(223450)).toBe(false);
+  });
 });

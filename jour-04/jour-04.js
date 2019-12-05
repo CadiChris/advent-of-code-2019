@@ -6,5 +6,14 @@ export const criteres = {
   chiffresAdacents(mot) {
     const adjacents = new RegExp(/(\d)\1+/);
     return adjacents.test(mot);
+  },
+
+  chiffresEgauxOuCroissent(mot) {
+    const aLenvers = String(mot)
+      .split("")
+      .reverse()
+      .join("");
+
+    return mot <= Number(aLenvers);
   }
 };
