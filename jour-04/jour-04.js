@@ -3,9 +3,15 @@ export function range(debut, fin) {
 }
 
 export const criteres = {
-  chiffresAdacents(mot) {
-    const adjacents = new RegExp(/(\d)\1+/);
-    return adjacents.test(mot);
+  chiffresAdjacents(mot) {
+    const groupes = String(mot)
+      .split("")
+      .reduce(
+        (tri, chiffre) => ({ ...tri, [chiffre]: (tri[chiffre] || 0) + 1 }),
+        {}
+      );
+
+    return Object.values(groupes).includes(2);
   },
 
   chiffresEgauxOuCroissent(mot) {

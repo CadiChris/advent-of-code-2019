@@ -7,10 +7,11 @@ describe("création de range", () => {
 });
 
 describe("critères de mot de passe", () => {
-  it("valide si 2 chiffres adjacents sont les mêmes", () => {
-    expect(criteres.chiffresAdacents(112345)).toBe(true);
-    expect(criteres.chiffresAdacents(192345)).toBe(false);
-    expect(criteres.chiffresAdacents(123789)).toBe(false);
+  it("valide si pile 2 chiffres adjacents sont les mêmes", () => {
+    expect(criteres.chiffresAdjacents(112345)).toBe(true);
+    expect(criteres.chiffresAdjacents(192345)).toBe(false);
+    expect(criteres.chiffresAdjacents(123789)).toBe(false);
+    expect(criteres.chiffresAdjacents(123444)).toBe(false);
   });
 
   it("valide si tous les chiffres croissent ou reste égaux", () => {
@@ -23,12 +24,12 @@ describe("critères de mot de passe", () => {
 });
 
 describe("jour 04", () => {
-  it("trouve la solution", () => {
+  it("trouve la solution - part 02", () => {
     const estValide = mot =>
-      criteres.chiffresAdacents(mot) && criteres.chiffresEgauxOuCroissent(mot);
+      criteres.chiffresAdjacents(mot) && criteres.chiffresEgauxOuCroissent(mot);
 
     const valides = range(382345, 843167).filter(estValide);
 
-    expect(valides.length).toBe(460);
+    expect(valides.length).toBe(290);
   });
 });
