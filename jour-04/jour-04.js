@@ -15,11 +15,7 @@ export const criteres = {
   },
 
   chiffresEgauxOuCroissent(mot) {
-    const chiffres = String(mot).split("");
-
-    for (let i = 0; i < chiffres.length - 1; i++)
-      if (chiffres[i + 1] < chiffres[i]) return false;
-
-    return true;
+    const triee = String(mot).split("").sort().join("")
+    return String(mot) === triee
   }
 };
