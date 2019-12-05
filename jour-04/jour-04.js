@@ -9,11 +9,11 @@ export const criteres = {
   },
 
   chiffresEgauxOuCroissent(mot) {
-    const aLenvers = String(mot)
-      .split("")
-      .reverse()
-      .join("");
+    const chiffres = String(mot).split("");
 
-    return mot <= Number(aLenvers);
+    for (let i = 0; i < chiffres.length - 1; i++)
+      if (chiffres[i + 1] < chiffres[i]) return false;
+
+    return true;
   }
 };
