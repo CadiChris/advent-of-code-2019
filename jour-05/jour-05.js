@@ -4,20 +4,31 @@ const OP_CODES = {
   HALT: 99
 };
 
+const PositionParameter = adresse => ({
+  value: programme => programme[adresse]
+});
+
 export function getInstruction(programme, adresse) {
   if (programme[adresse] === OP_CODES.HALT) return { opcode: OP_CODES.HALT };
 
   const [opcode, i1, i2, output] = programme.slice(adresse, adresse + 4);
 
-  return { opcode, inputs: [i1, i2], output, prochaine: adresse + 4 };
+  return {
+    opcode,
+    parameters: [PositionParameter(i1), PositionParameter(i2)],
+    output,
+    prochaine: adresse + 4
+  };
 }
 
 export function appliquer(instruction, programme) {
-  const { opcode, inputs, output } = instruction;
+  const { opcode, parameters, output } = instruction;
 
   const operationParOpcode = {
-    [OP_CODES.ADD]: () => programme[inputs[0]] + programme[inputs[1]],
-    [OP_CODES.MULTIPLY]: () => programme[inputs[0]] * programme[inputs[1]]
+    [OP_CODES.ADD]: () =>
+      parameters[0].value(programme) + parameters[1].value(programme),
+    [OP_CODES.MULTIPLY]: () =>
+      parameters[0].value(programme) * parameters[1].value(programme)
   };
 
   const nouveauProgramme = [...programme];

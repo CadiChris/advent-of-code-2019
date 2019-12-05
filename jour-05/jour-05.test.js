@@ -4,9 +4,8 @@ describe("Jour 5", () => {
   const programme = toMemory("1,9,10,3,2,3,11,0,99,30,40,50");
 
   it("décode une instruction", () => {
-    expect(getInstruction(programme, depart)).toEqual({
+    expect(getInstruction(programme, depart)).toMatchObject({
       opcode: 1,
-      inputs: [9, 10],
       output: 3,
       prochaine: depart + 4
     });
