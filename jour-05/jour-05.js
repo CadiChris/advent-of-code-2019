@@ -7,6 +7,9 @@ const OP_CODES = {
 const PositionParameter = adresse => ({
   value: programme => programme[adresse]
 });
+const ImmediateParameter = adresse => ({
+  value: () => adresse
+});
 
 export function getInstruction(programme, adresse) {
   if (programme[adresse] === OP_CODES.HALT) return { opcode: OP_CODES.HALT };
@@ -16,23 +19,25 @@ export function getInstruction(programme, adresse) {
   return {
     opcode,
     parameters: [PositionParameter(i1), PositionParameter(i2)],
-    output,
+    output: ImmediateParameter(output),
     prochaine: adresse + 4
   };
 }
 
 export function appliquer(instruction, programme) {
-  const { opcode, parameters, output } = instruction;
+  const {
+    opcode,
+    parameters: [p1, p2],
+    output
+  } = instruction;
 
   const operationParOpcode = {
-    [OP_CODES.ADD]: () =>
-      parameters[0].value(programme) + parameters[1].value(programme),
-    [OP_CODES.MULTIPLY]: () =>
-      parameters[0].value(programme) * parameters[1].value(programme)
+    [OP_CODES.ADD]: () => p1.value(programme) + p2.value(programme),
+    [OP_CODES.MULTIPLY]: () => p1.value(programme) * p2.value(programme)
   };
 
   const nouveauProgramme = [...programme];
-  nouveauProgramme[output] = operationParOpcode[opcode]();
+  nouveauProgramme[output.value(programme)] = operationParOpcode[opcode]();
 
   return nouveauProgramme;
 }

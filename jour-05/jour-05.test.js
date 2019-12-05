@@ -6,7 +6,6 @@ describe("Jour 5", () => {
   it("décode une instruction", () => {
     expect(getInstruction(programme, depart)).toMatchObject({
       opcode: 1,
-      output: 3,
       prochaine: depart + 4
     });
   });
