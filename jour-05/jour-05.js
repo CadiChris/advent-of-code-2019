@@ -1,11 +1,11 @@
-export const OP_CODES = { ADD: 1, MULTIPLY: 2, HALT: 99 };
+export const OP_CODES = { ADD: 1, MULTIPLY: 2, HALT: 99, INPUT: 3, OUTPUT: 4 };
 
-export const PositionParameter = adresseDuParametre => ({
-  value: programme => programme[programme[adresseDuParametre]]
+export const PositionParameter = adresse => ({
+  value: programme => programme[adresse]
 });
 
 export const ImmediateParameter = adresseDuParametre => ({
-  value: programme => programme[adresseDuParametre]
+  value: () => adresseDuParametre
 });
 
 export const ADRESSE_DEPART = 0;
@@ -51,16 +51,28 @@ export function getModesDesParametres(opcodeRiche) {
   };
   const jusqua5 = 5 - String(opcodeRiche).length;
   const instructionSur5 = `${"0".repeat(jusqua5)}${opcodeRiche}`;
-
   const [modeP3, modeP2, modeP1] = instructionSur5;
+  const opCode = getOpcode(opcodeRiche);
 
-  return [
-    parametreParMode[modeP1],
-    parametreParMode[modeP2],
-    ImmediateParameter
-  ];
+  const parametresParOpcode = {
+    [OP_CODES.ADD]: () => [
+      parametreParMode[modeP1],
+      parametreParMode[modeP2],
+      parametreParMode[modeP3]
+    ],
+    [OP_CODES.MULTIPLY]: () => [
+      parametreParMode[modeP1],
+      parametreParMode[modeP2],
+      parametreParMode[modeP3]
+    ],
+    [OP_CODES.INPUT]: () => [parametreParMode[modeP1]],
+    [OP_CODES.OUTPUT]: () => [parametreParMode[modeP1]]
+  };
+
+  return parametresParOpcode[opCode]();
 }
 
+const INPUT_HARDCODE = 1;
 export function appliquer(instruction, programme) {
   const {
     opcode,
@@ -70,13 +82,22 @@ export function appliquer(instruction, programme) {
   const appliquerOpcode = {
     [OP_CODES.ADD]: () => {
       const resultat = [...programme];
-      resultat[p3] = p1 + p2;
+      resultat[p3] = resultat[p1] + resultat[p2];
       return resultat;
     },
     [OP_CODES.MULTIPLY]: () => {
       const resultat = [...programme];
-      resultat[p3] = p1 * p2;
+      resultat[p3] = resultat[p1] * resultat[p2];
       return resultat;
+    },
+    [OP_CODES.INPUT]: () => {
+      const resultat = [...programme];
+      resultat[p1] = INPUT_HARDCODE;
+      return resultat;
+    },
+    [OP_CODES.OUTPUT]: () => {
+      console.log(programme[p1]);
+      return programme;
     }
   };
 

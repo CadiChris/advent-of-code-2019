@@ -10,6 +10,7 @@ import {
   OP_CODES,
   PositionParameter
 } from "./jour-05";
+import {inputJ5} from "./input";
 
 describe("Jour 5", () => {
   const programme = toMemory("1,9,10,3,2,3,11,0,99,30,40,50");
@@ -33,16 +34,30 @@ describe("Jour 5", () => {
       expect(getModesDesParametres(valeur)).toEqual([
         PositionParameter,
         ImmediateParameter,
-        ImmediateParameter
+        PositionParameter
       ]);
     });
 
-    it("crée les paramètres d'une instruction", () => {
+    it("crée les paramètres d'une instruction ADD", () => {
       const programme = [1002, 4, 3, 4, 33];
       const parametres = getParametres(programme, ADRESSE_DEPART);
-      expect(parametres[0]).toBe(33);
-      expect(parametres[1]).toBe(3);
-      expect(parametres[2]).toBe(4);
+      expect(programme[parametres[0]]).toBe(33);
+      expect(programme[parametres[1]]).toBe(3);
+      expect(programme[parametres[2]]).toBe(33);
+    });
+
+    it("crée les paramètres d'un instruction INPUT", () => {
+      const programme = toMemory("3,0,4,0,99");
+      const parametres = getParametres(programme, ADRESSE_DEPART);
+      expect(programme[parametres[0]]).toBe(3);
+      expect(parametres.length).toBe(1);
+    });
+
+    it("crée les paramètres d'une instruction OUTPUT", () => {
+      const programme = toMemory("4,0");
+      const parametres = getParametres(programme, ADRESSE_DEPART);
+      expect(programme[parametres[0]]).toBe(4);
+      expect(parametres.length).toBe(1);
     });
   });
 
@@ -64,6 +79,11 @@ describe("Jour 5", () => {
   it("exécute jusqu'à la fin", () => {
     const resultat = executer(toMemory("1101,100,-1,4,0"));
     expect(resultat).toEqual([1101, 100, -1, 4, 99]);
+  });
+
+  it("trouve la solution", () => {
+    const programme = toMemory(inputJ5)
+    executer(programme) // 13547311
   });
 });
 
