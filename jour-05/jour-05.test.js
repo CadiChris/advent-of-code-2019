@@ -1,27 +1,7 @@
-import {
-  ADRESSE_DEPART,
-  appliquer,
-  executer,
-  getInstruction,
-  getModesDesParametres,
-  getOpcode,
-  getParametres,
-  ImmediateParameter,
-  OP_CODES,
-  PositionParameter
-} from "./jour-05";
+import { Add, ADRESSE_DEPART, executer, getOpcode, Input, OP_CODES, Output } from "./jour-05";
 import { inputJ5 } from "./input";
 
 describe("Jour 5", () => {
-  const programme = toMemory("1,9,10,3,2,3,11,0,99,30,40,50");
-
-  it("décode une instruction", () => {
-    expect(getInstruction(programme, ADRESSE_DEPART)).toMatchObject({
-      opcode: OP_CODES.ADD,
-      nextAdresse: ADRESSE_DEPART + 4
-    });
-  });
-
   it("décode le opcode d'une instruction", () => {
     expect(getOpcode(1101)).toBe(OP_CODES.ADD);
     expect(getOpcode(1)).toBe(OP_CODES.ADD);
@@ -29,41 +9,25 @@ describe("Jour 5", () => {
   });
 
   describe("paramètres d'instruction", () => {
-    it("donne les modes des paramètres", () => {
-      expect(getModesDesParametres([1002], 0)).toEqual([
-        PositionParameter,
-        ImmediateParameter,
-        PositionParameter
-      ]);
-    });
-
-    it("crée les paramètres d'une instruction ADD", () => {
+    it("crée les paramètres d'une opération ADD", () => {
       const programme = [1002, 4, 3, 4, 33];
-      const parametres = getParametres(programme, ADRESSE_DEPART);
+      const parametres = Add(ADRESSE_DEPART).getParametres(programme);
       expect(programme[parametres[0]]).toBe(33);
       expect(programme[parametres[1]]).toBe(3);
       expect(programme[parametres[2]]).toBe(33);
     });
 
-    it("crée les paramètres d'un instruction INPUT", () => {
-      const programme = toMemory("3,0,4,0,99");
-      const parametres = getParametres(programme, ADRESSE_DEPART);
-      expect(programme[parametres[0]]).toBe(3);
-      expect(parametres.length).toBe(1);
+    it("crée le paramètre d'un instruction INPUT", () => {
+      const programme = toMemory("3,50");
+      const parametre = Input(ADRESSE_DEPART).getParametre(programme);
+      expect(parametre).toBe(50);
     });
 
-    it("crée les paramètres d'une instruction OUTPUT", () => {
-      const programme = toMemory("4,0");
-      const parametres = getParametres(programme, ADRESSE_DEPART);
-      expect(programme[parametres[0]]).toBe(4);
-      expect(parametres.length).toBe(1);
+    it("crée le paramètre d'une instruction OUTPUT", () => {
+      const programme = toMemory("4,50");
+      const parametre = Output(ADRESSE_DEPART).getParametre(programme);
+      expect(parametre).toBe(50);
     });
-  });
-
-  it("applique une instruction au programme", () => {
-    const instruction = getInstruction(programme, ADRESSE_DEPART);
-    const resultat = appliquer(instruction, programme);
-    expect(resultat).toEqual([1, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50]);
   });
 
   it("exécute jusqu'à la fin - 01", () => {
