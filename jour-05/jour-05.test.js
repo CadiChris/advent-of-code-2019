@@ -10,7 +10,7 @@ import {
   OP_CODES,
   PositionParameter
 } from "./jour-05";
-import {inputJ5} from "./input";
+import { inputJ5 } from "./input";
 
 describe("Jour 5", () => {
   const programme = toMemory("1,9,10,3,2,3,11,0,99,30,40,50");
@@ -30,8 +30,7 @@ describe("Jour 5", () => {
 
   describe("paramètres d'instruction", () => {
     it("donne les modes des paramètres", () => {
-      const valeur = 1002;
-      expect(getModesDesParametres(valeur)).toEqual([
+      expect(getModesDesParametres([1002], 0)).toEqual([
         PositionParameter,
         ImmediateParameter,
         PositionParameter
@@ -82,8 +81,8 @@ describe("Jour 5", () => {
   });
 
   it("trouve la solution", () => {
-    const programme = toMemory(inputJ5)
-    executer(programme) // 13547311
+    const programme = toMemory(inputJ5);
+    executer(programme); // 13547311
   });
 });
 
