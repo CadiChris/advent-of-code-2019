@@ -16,7 +16,7 @@ export const Add = adresse => ({
     return resultat;
   },
   getParametres(programme) {
-    const [modeP3, modeP2, modeP1] = opcodeSur5(programme[adresse]);
+    const [modeP3, modeP2, modeP1] = intCodeSur5(programme[adresse]);
     return [
       PARAMETRE_PAR_MODE[modeP1](adresse + 1).value(programme),
       PARAMETRE_PAR_MODE[modeP2](adresse + 2).value(programme),
@@ -34,7 +34,7 @@ export const Multiply = adresse => ({
     return resultat;
   },
   getParametres(programme) {
-    const [modeP3, modeP2, modeP1] = opcodeSur5(programme[adresse]);
+    const [modeP3, modeP2, modeP1] = intCodeSur5(programme[adresse]);
     return [
       PARAMETRE_PAR_MODE[modeP1](adresse + 1).value(programme),
       PARAMETRE_PAR_MODE[modeP2](adresse + 2).value(programme),
@@ -53,7 +53,7 @@ export const Input = adresse => ({
     return resultat;
   },
   getParametre(programme) {
-    const modeP1 = opcodeSur5(programme[adresse])[2];
+    const modeP1 = intCodeSur5(programme[adresse])[2];
     return PARAMETRE_PAR_MODE[modeP1](adresse + 1).value(programme);
   },
   nextAdresse: () => adresse + 2
@@ -66,7 +66,7 @@ export const Output = adresse => ({
     return programme;
   },
   getParametre(programme) {
-    const modeP1 = opcodeSur5(programme[adresse])[2];
+    const modeP1 = intCodeSur5(programme[adresse])[2];
     return PARAMETRE_PAR_MODE[modeP1](adresse + 1).value(programme);
   },
   nextAdresse: () => adresse + 2
@@ -104,12 +104,12 @@ export function getInstruction(programme, adresse) {
   };
 }
 
-export function getOpcode(valeur) {
-  const v = String(valeur);
+export function getOpcode(intCode) {
+  const v = String(intCode);
   return Number(v.substring(v.length - 2, v.length));
 }
-function opcodeSur5(opcodeRiche) {
-  const jusqua5 = 5 - String(opcodeRiche).length;
-  const instructionSur5 = `${"0".repeat(jusqua5)}${opcodeRiche}`;
-  return instructionSur5;
+
+function intCodeSur5(intCode) {
+  const jusqua5 = 5 - String(intCode).length;
+  return `${"0".repeat(jusqua5)}${intCode}`;
 }
