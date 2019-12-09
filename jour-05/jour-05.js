@@ -85,11 +85,9 @@ export const ADRESSE_DEPART = 0;
 export function executer(programme) {
   let instruction = getInstruction(programme, ADRESSE_DEPART);
   while (instruction.opcode !== OP_CODES.HALT) {
-    programme = instruction.operation.executer(programme);
-    instruction = getInstruction(
-      programme,
-      instruction.operation.nextAdresse()
-    );
+    const { operation } = instruction;
+    programme = operation.executer(programme);
+    instruction = getInstruction(programme, operation.nextAdresse());
   }
   return programme;
 }
