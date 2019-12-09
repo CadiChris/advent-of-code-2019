@@ -12,6 +12,15 @@ export function getUnParametre(programme, adresse) {
   return PARAMETRE_PAR_MODE[modeP1](adresse + 1).value(programme);
 }
 
+export function getDeuxParametres(programme, adresse) {
+  const modeP1 = intCodeSur5(programme[adresse])[2];
+  const modeP2 = intCodeSur5(programme[adresse])[1];
+  return [
+    PARAMETRE_PAR_MODE[modeP1](adresse + 1).value(programme),
+    PARAMETRE_PAR_MODE[modeP2](adresse + 2).value(programme)
+  ];
+}
+
 export function getTroisParametres(programme, adresse) {
   const [modeP3, modeP2, modeP1] = intCodeSur5(programme[adresse]);
   return [
@@ -68,6 +77,30 @@ export const Output = (adresse, outputFn) => ({
   nextAdresse: () => adresse + 2
 });
 
+const JumpIfTrue = adresse => ({
+  executer(programme) {
+    const [p1, p2] = getDeuxParametres(programme, adresse);
+    if (programme[p1] !== 0) this._nextAdresse = programme[p2];
+    else this._nextAdresse = adresse + 3;
+    return programme;
+  },
+  nextAdresse() {
+    return this._nextAdresse;
+  }
+});
+
+const JumpIfFalse = adresse => ({
+  executer(programme) {
+    const [p1, p2] = getDeuxParametres(programme, adresse);
+    if (programme[p1] === 0) this._nextAdresse = programme[p2];
+    else this._nextAdresse = adresse + 3;
+    return programme;
+  },
+  nextAdresse() {
+    return this._nextAdresse;
+  }
+});
+
 export const Equals = adresse => ({
   executer(programme) {
     const resultat = [...programme];
@@ -95,6 +128,8 @@ export const OP_CODES = {
   MULTIPLY: 2,
   INPUT: 3,
   OUTPUT: 4,
+  JUMP_IF_TRUE: 5,
+  JUMP_IF_FALSE: 6,
   LESS_THAN: 7,
   EQUALS: 8,
   HALT: 99
@@ -118,7 +153,7 @@ export function executer(programme, { inputs, outputFn } = {}) {
 }
 
 export function getInstruction(programme, adresse, { inputs, outputFn }) {
-  const opcode = getOpcode(programme[adresse]);
+  const opcode = getOpcode(programme[adresse]); //?
   if (opcode === OP_CODES.HALT) return { opcode: OP_CODES.HALT };
 
   const OPERATION_PAR_OPCODE = {
@@ -126,6 +161,8 @@ export function getInstruction(programme, adresse, { inputs, outputFn }) {
     [OP_CODES.MULTIPLY]: () => Multiply(adresse),
     [OP_CODES.INPUT]: () => Input(adresse, inputs),
     [OP_CODES.OUTPUT]: () => Output(adresse, outputFn),
+    [OP_CODES.JUMP_IF_TRUE]: () => JumpIfTrue(adresse),
+    [OP_CODES.JUMP_IF_FALSE]: () => JumpIfFalse(adresse),
     [OP_CODES.LESS_THAN]: () => LessThan(adresse),
     [OP_CODES.EQUALS]: () => Equals(adresse)
   };
