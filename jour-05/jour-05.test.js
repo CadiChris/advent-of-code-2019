@@ -3,6 +3,8 @@ import {
   ADRESSE_DEPART,
   executer,
   getOpcode,
+  getTroisParametres,
+  getUnParametre,
   Input,
   inputValues,
   OP_CODES,
@@ -18,23 +20,17 @@ describe("Jour 5 - part 01", () => {
   });
 
   describe("paramètres d'instruction", () => {
-    it("crée les paramètres d'une opération ADD", () => {
+    it("crée les paramètres d'une opération à 3 paramètre", () => {
       const programme = [1002, 4, 3, 4, 33];
-      const parametres = Add(ADRESSE_DEPART).getParametres(programme);
+      const parametres = getTroisParametres(programme, ADRESSE_DEPART);
       expect(programme[parametres[0]]).toBe(33);
       expect(programme[parametres[1]]).toBe(3);
       expect(programme[parametres[2]]).toBe(33);
     });
 
-    it("crée le paramètre d'un instruction INPUT", () => {
-      const programme = toMemory("3,50");
-      const parametre = Input(ADRESSE_DEPART).getParametre(programme);
-      expect(parametre).toBe(50);
-    });
-
-    it("crée le paramètre d'une instruction OUTPUT", () => {
+    it("crée le paramètre d'un instruction à un paramètre", () => {
       const programme = toMemory("4,50");
-      const parametre = Output(ADRESSE_DEPART).getParametre(programme);
+      const parametre = getUnParametre(programme, ADRESSE_DEPART);
       expect(parametre).toBe(50);
     });
   });
