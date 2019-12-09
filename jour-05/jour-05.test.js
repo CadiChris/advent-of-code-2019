@@ -10,7 +10,7 @@ import {
 } from "./jour-05";
 import { inputJ5 } from "./input";
 
-describe("Jour 5", () => {
+describe("Jour 5 - part 01", () => {
   it("décode le opcode d'une instruction", () => {
     expect(getOpcode(1101)).toBe(OP_CODES.ADD);
     expect(getOpcode(1)).toBe(OP_CODES.ADD);
@@ -53,7 +53,7 @@ describe("Jour 5", () => {
     expect(resultat).toEqual([1101, 100, -1, 4, 99]);
   });
 
-  it("trouve la solution", () => {
+  it("trouve la solution - part 01", () => {
     const programme = toMemory(inputJ5);
     const inputUN = inputValues([1]);
     const outputs = [];
@@ -62,6 +62,19 @@ describe("Jour 5", () => {
     executer(programme, { inputs: inputUN, outputFn: recordOutputs });
 
     expect(outputs.pop()).toEqual(13547311);
+  });
+});
+
+describe("Jour 05 - part 02", () => {
+  it("joue l'exemple 1 avec EQUAL TO", () => {
+    const programme = toMemory("3,9,8,9,10,9,4,9,99,-1,8");
+    const input8 = inputValues([8]);
+    const outputs = [];
+    const recordOutputs = o => outputs.push(o);
+
+    executer(programme, { inputs: input8, outputFn: recordOutputs });
+
+    expect(outputs.pop()).toBe(1);
   });
 });
 
