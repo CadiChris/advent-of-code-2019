@@ -44,12 +44,14 @@ export const Multiply = adresse => ({
   nextAdresse: () => adresse + 4
 });
 
-export const Input = adresse => ({
-  INPUT_HARDCODE: 1,
+export const inputValues = values => ({
+  nextValue: () => values.shift()
+});
+export const Input = (adresse, inputs) => ({
   executer(programme) {
     const p1 = this.getParametre(programme);
     const resultat = [...programme];
-    resultat[p1] = this.INPUT_HARDCODE;
+    resultat[p1] = inputs.nextValue();
     return resultat;
   },
   getParametre(programme) {
@@ -59,10 +61,10 @@ export const Input = adresse => ({
   nextAdresse: () => adresse + 2
 });
 
-export const Output = adresse => ({
+export const Output = (adresse, outputFn) => ({
   executer(programme) {
     const p1 = this.getParametre(programme);
-    console.log(programme[p1]);
+    outputFn(programme[p1]);
     return programme;
   },
   getParametre(programme) {
@@ -74,31 +76,37 @@ export const Output = adresse => ({
 
 export const OP_CODES = { ADD: 1, MULTIPLY: 2, HALT: 99, INPUT: 3, OUTPUT: 4 };
 
-const OPERATION_PAR_OPCODE = {
-  [OP_CODES.ADD]: Add,
-  [OP_CODES.MULTIPLY]: Multiply,
-  [OP_CODES.INPUT]: Input,
-  [OP_CODES.OUTPUT]: Output
-};
-
 export const ADRESSE_DEPART = 0;
-export function executer(programme) {
-  let instruction = getInstruction(programme, ADRESSE_DEPART);
+export function executer(programme, { inputs, outputFn } = {}) {
+  let instruction = getInstruction(programme, ADRESSE_DEPART, {
+    inputs,
+    outputFn
+  });
   while (instruction.opcode !== OP_CODES.HALT) {
     const { operation } = instruction;
     programme = operation.executer(programme);
-    instruction = getInstruction(programme, operation.nextAdresse());
+    instruction = getInstruction(programme, operation.nextAdresse(), {
+      inputs,
+      outputFn
+    });
   }
   return programme;
 }
 
-export function getInstruction(programme, adresse) {
+export function getInstruction(programme, adresse, { inputs, outputFn }) {
   const opcode = getOpcode(programme[adresse]);
   if (opcode === OP_CODES.HALT) return { opcode: OP_CODES.HALT };
 
+  const OPERATION_PAR_OPCODE = {
+    [OP_CODES.ADD]: () => Add(adresse),
+    [OP_CODES.MULTIPLY]: () => Multiply(adresse),
+    [OP_CODES.INPUT]: () => Input(adresse, inputs),
+    [OP_CODES.OUTPUT]: () => Output(adresse, outputFn)
+  };
+
   return {
     opcode,
-    operation: OPERATION_PAR_OPCODE[opcode](adresse)
+    operation: OPERATION_PAR_OPCODE[opcode]()
   };
 }
 

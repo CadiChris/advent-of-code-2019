@@ -1,4 +1,13 @@
-import { Add, ADRESSE_DEPART, executer, getOpcode, Input, OP_CODES, Output } from "./jour-05";
+import {
+  Add,
+  ADRESSE_DEPART,
+  executer,
+  getOpcode,
+  Input,
+  inputValues,
+  OP_CODES,
+  Output
+} from "./jour-05";
 import { inputJ5 } from "./input";
 
 describe("Jour 5", () => {
@@ -46,7 +55,25 @@ describe("Jour 5", () => {
 
   it("trouve la solution", () => {
     const programme = toMemory(inputJ5);
-    executer(programme); // 13547311
+    const inputUN = inputValues([1]);
+    const outputs = [];
+    const recordOutputs = o => outputs.push(o);
+
+    executer(programme, { inputs: inputUN, outputFn: recordOutputs });
+
+    expect(outputs.pop()).toEqual(13547311);
+  });
+});
+
+describe("inputs", () => {
+  it("donne les valeurs l'une après l'autre", () => {
+    const uneValeur = inputValues([1]);
+    expect(uneValeur.nextValue()).toBe(1);
+
+    const troisValeurs = inputValues([1, 2, 3]);
+    expect(troisValeurs.nextValue()).toBe(1);
+    expect(troisValeurs.nextValue()).toBe(2);
+    expect(troisValeurs.nextValue()).toBe(3);
   });
 });
 
