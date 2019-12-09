@@ -44,7 +44,7 @@ export const Multiply = adresse => ({
     return resultat;
   },
   nextAdresse: () => adresse + 4
-})
+});
 
 export const inputValues = values => ({
   nextValue: () => values.shift()
@@ -79,11 +79,23 @@ export const Equals = adresse => ({
   nextAdresse: () => adresse + 4
 });
 
+export const LessThan = adresse => ({
+  executer(programme) {
+    const resutat = [...programme];
+    const [p1, p2, p3] = getTroisParametres(programme, adresse);
+    if (programme[p1] < programme[p2]) resutat[p3] = 1;
+    else resutat[p3] = 0;
+    return resutat;
+  },
+  nextAdresse: () => adresse + 4
+});
+
 export const OP_CODES = {
   ADD: 1,
   MULTIPLY: 2,
   INPUT: 3,
   OUTPUT: 4,
+  LESS_THAN: 7,
   EQUALS: 8,
   HALT: 99
 };
@@ -114,6 +126,7 @@ export function getInstruction(programme, adresse, { inputs, outputFn }) {
     [OP_CODES.MULTIPLY]: () => Multiply(adresse),
     [OP_CODES.INPUT]: () => Input(adresse, inputs),
     [OP_CODES.OUTPUT]: () => Output(adresse, outputFn),
+    [OP_CODES.LESS_THAN]: () => LessThan(adresse),
     [OP_CODES.EQUALS]: () => Equals(adresse)
   };
 
@@ -127,4 +140,3 @@ export function getOpcode(intCode) {
   const v = String(intCode);
   return Number(v.substring(v.length - 2, v.length));
 }
-

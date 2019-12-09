@@ -62,13 +62,24 @@ describe("Jour 5 - part 01", () => {
 });
 
 describe("Jour 05 - part 02", () => {
-  it("joue l'exemple 1 avec EQUAL TO", () => {
+  it("joue l'exemple 1 de EQUAL TO", () => {
     const programme = toMemory("3,9,8,9,10,9,4,9,99,-1,8");
     const input8 = inputValues([8]);
     const outputs = [];
     const recordOutputs = o => outputs.push(o);
 
     executer(programme, { inputs: input8, outputFn: recordOutputs });
+
+    expect(outputs.pop()).toBe(1);
+  });
+
+  it("joue l'exemple 2 de LESS THAN", () => {
+    const programme = toMemory("3,9,7,9,10,9,4,9,99,-1,8");
+    const input7 = inputValues([7]);
+    const outputs = [];
+    const recordOutputs = o => outputs.push(o);
+
+    executer(programme, { inputs: input7, outputFn: recordOutputs });
 
     expect(outputs.pop()).toBe(1);
   });
