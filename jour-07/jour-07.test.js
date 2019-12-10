@@ -24,4 +24,11 @@ describe("Jour 07", () => {
     const signal = amplifier([3, 1], programme);
     expect(signal).toBe(281);
   });
+
+  it("chaîne 5 amplificateurs", () => {
+    const programme = toMemory(
+      "3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0"
+    );
+    expect(amplifier([4, 3, 2, 1, 0], programme)).toBe(43210);
+  });
 });
