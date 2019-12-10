@@ -128,14 +128,14 @@ describe("Jour 05 - part 02", () => {
   });
 
   it("trouve la solution - part 02", () => {
-    const programme = toMemory(inputJ5)
-    const input5 = inputValues([5])
-    const outputs = []
-    const recordOutputs = o => outputs.push(o)
+    const programme = toMemory(inputJ5);
+    const input5 = inputValues([5]);
+    const outputs = [];
+    const recordOutputs = o => outputs.push(o);
 
-    executer(programme, {inputs: input5, outputFn: recordOutputs})
+    executer(programme, { inputs: input5, outputFn: recordOutputs });
 
-    expect(outputs.pop()).toBe(236453)
+    expect(outputs.pop()).toBe(236453);
   });
 });
 
@@ -151,6 +151,6 @@ describe("inputs", () => {
   });
 });
 
-function toMemory(programme) {
+export function toMemory(programme) {
   return programme.split(",").map(Number);
 }
