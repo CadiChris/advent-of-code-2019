@@ -137,19 +137,20 @@ export const OP_CODES = {
 
 export const ADRESSE_DEPART = 0;
 export function executer(programme, { inputs, outputFn } = {}) {
-  let instruction = getInstruction(programme, ADRESSE_DEPART, {
+  let resultat = [...programme];
+  let instruction = getInstruction(resultat, ADRESSE_DEPART, {
     inputs,
     outputFn
   });
   while (instruction.opcode !== OP_CODES.HALT) {
     const { operation } = instruction;
-    programme = operation.executer(programme);
-    instruction = getInstruction(programme, operation.nextAdresse(), {
+    resultat = operation.executer(resultat);
+    instruction = getInstruction(resultat, operation.nextAdresse(), {
       inputs,
       outputFn
     });
   }
-  return programme;
+  return resultat;
 }
 
 export function getInstruction(programme, adresse, { inputs, outputFn }) {

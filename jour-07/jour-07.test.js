@@ -1,7 +1,8 @@
 import { inputJ7 } from "./input";
 import { executer, inputValues } from "../jour-05/jour-05";
 import { toMemory } from "../jour-05/jour-05.test";
-import { amplifier } from "./jour-07";
+import { amplifier, signalMax } from "./jour-07";
+import { combinaisonsPhases } from "./combinaisons";
 
 describe("Jour 07", () => {
   const programme = toMemory(inputJ7);
@@ -30,5 +31,9 @@ describe("Jour 07", () => {
       "3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0"
     );
     expect(amplifier([4, 3, 2, 1, 0], programme)).toBe(43210);
+  });
+
+  it("trouve la solution - part 01", () => {
+    expect(signalMax(combinaisonsPhases, toMemory(inputJ7))).toBe(101490);
   });
 });

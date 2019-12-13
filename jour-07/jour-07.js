@@ -13,3 +13,10 @@ export function amplifier(phases, programme) {
     return output.pop();
   }, 0);
 }
+
+export function signalMax(combinaisonsPhases, programme) {
+  return combinaisonsPhases.reduce(
+    (max, phases) => Math.max(amplifier(phases, programme), max),
+    0
+  );
+}
