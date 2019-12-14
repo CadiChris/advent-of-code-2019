@@ -1,17 +1,11 @@
-import {
-  Add,
-  ADRESSE_DEPART,
-  executer,
-  getDeuxParametres,
-  getOpcode,
-  getTroisParametres,
-  getUnParametre,
-  Input,
-  inputValues,
-  OP_CODES,
-  Output
-} from "./jour-05";
+import { ADRESSE_DEPART, executer } from "./jour-05";
 import { inputJ5 } from "./input";
+import {
+  getDeuxParametres,
+  getTroisParametres,
+  getUnParametre
+} from "./parametres";
+import { getOpcode, inputValues, OP_CODES } from "./operations";
 
 describe("Jour 5 - part 01", () => {
   it("décode le opcode d'une instruction", () => {

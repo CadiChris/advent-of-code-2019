@@ -1,8 +1,9 @@
 import { inputJ7 } from "./input";
-import { executer, inputValues } from "../jour-05/jour-05";
+import { executer } from "../jour-05/jour-05";
 import { toMemory } from "../jour-05/jour-05.test";
 import { amplifier, signalMax } from "./jour-07";
 import { combinaisonsPhases } from "./combinaisons";
+import { inputValues } from "../jour-05/operations";
 
 describe("Jour 07", () => {
   const programme = toMemory(inputJ7);

@@ -1,4 +1,5 @@
-import { executer, inputValues } from "../jour-05/jour-05";
+import { executer } from "../jour-05/jour-05";
+import { inputValues } from "../jour-05/operations";
 
 export function amplifier(phases, programme) {
   return phases.reduce((outputPrecedent, phase) => {
