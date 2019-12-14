@@ -118,13 +118,13 @@ describe("Jour 05 - part 02", () => {
     const programme = toMemory(
       `3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,999,1105,1,46,1101,1000,1,20,4,20,1105,1,46,98,99`
     );
-    const inputPlusQue8 = inputValues([7]);
+    const inputPlusQue8 = inputValues([9]);
     const outputs = [];
     const recordOutputs = o => outputs.push(o);
 
     executer(programme, { inputs: inputPlusQue8, outputFn: recordOutputs });
 
-    expect(outputs.pop()).toBe(0);
+    expect(outputs.pop()).toBe(1001);
   });
 
   it("trouve la solution - part 02", () => {
