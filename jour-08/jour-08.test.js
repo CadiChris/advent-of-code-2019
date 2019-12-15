@@ -1,0 +1,47 @@
+import { calques, compte, image, lignes, moinsDe0 } from "./jour-08";
+import { inputJ8 } from "./input";
+
+describe("Jour 08 - part 01", () => {
+  const troisXdeux = { largeur: 3, hauteur: 2 };
+
+  it("trouve les calques d'une image", () => {
+    const pixels = "123456789012000000";
+    expect(calques(pixels, troisXdeux)).toEqual(["123456", "789012", "000000"]);
+  });
+
+  it("trouve les lignes d'un calque", () => {
+    const pixels = "123456";
+    expect(lignes(pixels, troisXdeux)).toEqual(["123", "456"]);
+
+    const morePixels = "123456789012";
+    expect(lignes(morePixels, { largeur: 3, hauteur: 4 })).toEqual([
+      "123",
+      "456",
+      "789",
+      "012"
+    ]);
+  });
+
+  it("décode une image", () => {
+    const pixels = "123456789012";
+    expect(image(pixels, troisXdeux)).toEqual([
+      ["123", "456"],
+      ["789", "012"]
+    ]);
+  });
+
+  it("trouve le calque avec le moins de 0", () => {
+    const calque1 = "000111";
+    const calque2 = "011111";
+    expect(moinsDe0([calque1, calque2])).toBe(calque2);
+
+    expect(compte(calque2, "1") * compte(calque1, "0")).toBe(15);
+    const sans0 = "34543";
+    expect(moinsDe0([calque1, sans0])).toBe(sans0);
+  });
+
+  it("trouve la réponse", () => {
+    const calque0 = moinsDe0(calques(inputJ8, { largeur: 25, hauteur: 6 }));
+    expect(compte(calque0, "1") * compte(calque0, "2")).toBe(1905);
+  });
+});
