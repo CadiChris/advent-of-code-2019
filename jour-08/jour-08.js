@@ -1,7 +1,3 @@
-export function image(pixels, dimensions) {
-  return calques(pixels, dimensions).map(c => lignes(c, dimensions));
-}
-
 export function calques(pixels, dimensions) {
   const { largeur, hauteur } = dimensions;
   const tailleDeCalque = hauteur * largeur;
@@ -44,4 +40,21 @@ export function couleur(calquesLignes, coord) {
     const pixel = ligne[coord.colonne - 1];
     if (estDeCouleur(pixel)) return pixel;
   }
+}
+
+export function decompose(pixels, dimensions) {
+  return calques(pixels, dimensions).map(c => lignes(c, dimensions));
+}
+
+export function decode(pixels, dimensions) {
+  const decomposition = decompose(pixels, dimensions);
+  const image = [];
+  for (let ligne = 1; ligne <= dimensions.hauteur; ligne++) {
+    let pixelsLigne = "";
+    for (let colonne = 1; colonne <= dimensions.largeur; colonne++) {
+      pixelsLigne += couleur(decomposition, { ligne, colonne });
+    }
+    image.push(pixelsLigne);
+  }
+  return image;
 }

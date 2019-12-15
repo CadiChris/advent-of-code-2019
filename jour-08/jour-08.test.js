@@ -3,7 +3,8 @@ import {
   compte,
   couleur,
   COULEURS,
-  image,
+  decode,
+  decompose,
   lignes,
   moinsDe0
 } from "./jour-08";
@@ -30,14 +31,6 @@ describe("Jour 08 - part 01", () => {
     ]);
   });
 
-  it("décode une image", () => {
-    const pixels = "123456789012";
-    expect(image(pixels, troisXdeux)).toEqual([
-      ["123", "456"],
-      ["789", "012"]
-    ]);
-  });
-
   it("trouve le calque avec le moins de 0", () => {
     const calque1 = "000111";
     const calque2 = "011111";
@@ -55,6 +48,9 @@ describe("Jour 08 - part 01", () => {
 });
 
 describe("Jour 08 - part 02", () => {
+  const pixels = "0222112222120000";
+  const deuxXdeux = { largeur: 2, hauteur: 2 };
+
   it("trouve la couleur d'un pixel ", () => {
     const laCouleur = couleur(
       [
@@ -67,5 +63,19 @@ describe("Jour 08 - part 02", () => {
     );
 
     expect(laCouleur).toBe(COULEURS.NOIR);
+  });
+
+  it("décompose une image", () => {
+    expect(decompose(pixels, deuxXdeux)).toEqual([
+      ["02", "22"],
+      ["11", "22"],
+      ["22", "12"],
+      ["00", "00"]
+    ]);
+  });
+
+  it("décode une image", () => {
+    const image = decode(pixels, deuxXdeux);
+    expect(image).toEqual(["01", "10"]);
   });
 });
