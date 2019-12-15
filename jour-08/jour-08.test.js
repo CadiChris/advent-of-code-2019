@@ -1,4 +1,12 @@
-import { calques, compte, image, lignes, moinsDe0 } from "./jour-08";
+import {
+  calques,
+  compte,
+  couleur,
+  COULEURS,
+  image,
+  lignes,
+  moinsDe0
+} from "./jour-08";
 import { inputJ8 } from "./input";
 
 describe("Jour 08 - part 01", () => {
@@ -43,5 +51,21 @@ describe("Jour 08 - part 01", () => {
   it("trouve la réponse", () => {
     const calque0 = moinsDe0(calques(inputJ8, { largeur: 25, hauteur: 6 }));
     expect(compte(calque0, "1") * compte(calque0, "2")).toBe(1905);
+  });
+});
+
+describe("Jour 08 - part 02", () => {
+  it("trouve la couleur d'un pixel ", () => {
+    const laCouleur = couleur(
+      [
+        ["02", "22"],
+        ["11", "22"],
+        ["22", "12"],
+        ["00", "00"]
+      ],
+      { ligne: 1, colonne: 1 }
+    );
+
+    expect(laCouleur).toBe(COULEURS.NOIR);
   });
 });

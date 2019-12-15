@@ -34,3 +34,14 @@ export function moinsDe0(calques) {
     compte(min, "0") < compte(calque, "0") ? min : calque
   );
 }
+
+export const COULEURS = { NOIR: "0", BLANC: "1" };
+const estDeCouleur = pixel => Object.values(COULEURS).includes(pixel);
+
+export function couleur(calquesLignes, coord) {
+  for (const calque of calquesLignes) {
+    const ligne = calque[coord.ligne - 1];
+    const pixel = ligne[coord.colonne - 1];
+    if (estDeCouleur(pixel)) return pixel;
+  }
+}
