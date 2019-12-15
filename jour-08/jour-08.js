@@ -58,3 +58,14 @@ export function decode(pixels, dimensions) {
   }
   return image;
 }
+
+export function dessine(lignesDePixels) {
+  const crayon = { [COULEURS.NOIR]: "⬛", [COULEURS.BLANC]: "⬜" };
+
+  let dessin = "\n";
+  for (const ligne of lignesDePixels) {
+    for (const pixel of ligne.split("")) dessin += crayon[pixel];
+    dessin += "\n";
+  }
+  return dessin;
+}

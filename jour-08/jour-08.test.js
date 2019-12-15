@@ -5,10 +5,13 @@ import {
   COULEURS,
   decode,
   decompose,
+  dessine,
   lignes,
   moinsDe0
 } from "./jour-08";
 import { inputJ8 } from "./input";
+
+const vingtCinqXsix = { largeur: 25, hauteur: 6 };
 
 describe("Jour 08 - part 01", () => {
   const troisXdeux = { largeur: 3, hauteur: 2 };
@@ -42,7 +45,7 @@ describe("Jour 08 - part 01", () => {
   });
 
   it("trouve la réponse", () => {
-    const calque0 = moinsDe0(calques(inputJ8, { largeur: 25, hauteur: 6 }));
+    const calque0 = moinsDe0(calques(inputJ8, vingtCinqXsix));
     expect(compte(calque0, "1") * compte(calque0, "2")).toBe(1905);
   });
 });
@@ -77,5 +80,20 @@ describe("Jour 08 - part 02", () => {
   it("décode une image", () => {
     const image = decode(pixels, deuxXdeux);
     expect(image).toEqual(["01", "10"]);
+  });
+
+  it("dessine une image", () => {
+    expect(dessine(["01", "10"])).toEqual("\n⬛⬜\n⬜⬛\n");
+  });
+
+  it("trouve la solution", () => {
+    expect(dessine(decode(inputJ8, vingtCinqXsix))).toEqual(`
+⬛⬜⬜⬛⬛⬛⬜⬜⬛⬛⬜⬛⬛⬜⬛⬜⬜⬜⬛⬛⬜⬜⬜⬜⬛
+⬜⬛⬛⬜⬛⬜⬛⬛⬜⬛⬜⬛⬜⬛⬛⬜⬛⬛⬜⬛⬛⬛⬛⬜⬛
+⬜⬛⬛⬜⬛⬜⬛⬛⬛⬛⬜⬜⬛⬛⬛⬜⬛⬛⬜⬛⬛⬛⬜⬛⬛
+⬜⬜⬜⬜⬛⬜⬛⬛⬛⬛⬜⬛⬜⬛⬛⬜⬜⬜⬛⬛⬛⬜⬛⬛⬛
+⬜⬛⬛⬜⬛⬜⬛⬛⬜⬛⬜⬛⬜⬛⬛⬜⬛⬛⬛⬛⬜⬛⬛⬛⬛
+⬜⬛⬛⬜⬛⬛⬜⬜⬛⬛⬜⬛⬛⬜⬛⬜⬛⬛⬛⬛⬜⬜⬜⬜⬛
+`);
   });
 });
