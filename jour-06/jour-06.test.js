@@ -29,6 +29,6 @@ describe("Jour 06 - part 01", () => {
   });
 
   it("trouve la solution", () => {
-    expect(toutesLesDistances(inputJ6)).toBe(0);
+    expect(toutesLesDistances(inputJ6)).toBe(142915);
   });
 });
