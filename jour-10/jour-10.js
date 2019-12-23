@@ -10,6 +10,21 @@ export function asteroide(x, y) {
       return xA !== xB
         ? pasLeMemeX(xA, xB, yA, yB, map)
         : leMemeX(xA, xB, yA, yB, map);
+    },
+
+    detecteDans(map) {
+      let detections = 0;
+      for (let xB = 0; xB < map[0].length; xB++) {
+        for (let yB = 0; yB < map.length; yB++) {
+          const maPosition = x === xB && y === yB;
+          if (maPosition) continue;
+
+          if (estUnAsteroide(xB, yB, map) && this.voit(asteroide(xB, yB), map))
+            detections++;
+        }
+      }
+
+      return detections;
     }
   };
 }
@@ -17,7 +32,7 @@ export function asteroide(x, y) {
 function leMemeX(xA, xB, yA, yB, map) {
   let direction = yA < yB ? 1 : -1;
   for (let y = yA + direction; y !== yB; y += direction) {
-    const toucheAsteroide = map[y].split("")[xA] === "#";
+    const toucheAsteroide = estUnAsteroide(xA, y, map);
     if (toucheAsteroide) return false;
   }
   return true;
@@ -32,10 +47,11 @@ function pasLeMemeX(xA, xB, yA, yB, map) {
   for (let x = xA + direction; x !== xB; x += direction) {
     const y = alpha * x + beta;
     const collision = Number.isInteger(y);
-    if (collision) {
-      const avecAsteroide = map[y].split("")[x] === "#";
-      if (avecAsteroide) return false;
-    }
+    if (collision && estUnAsteroide(x, y, map)) return false;
   }
   return true;
+}
+
+function estUnAsteroide(x, y, map) {
+  return map[y].split("")[x] === "#";
 }
