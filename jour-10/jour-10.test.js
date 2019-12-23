@@ -1,5 +1,28 @@
-import { asteroide, stationOrbitale } from "./jour-10";
+import { asteroide, stationOrbitale, vaporisateur } from "./jour-10";
 import { inputJ10 } from "./input";
+
+const map_11_13 = [
+  ".#..##.###...#######",
+  "##.############..##.",
+  ".#.######.########.#",
+  ".###.#######.####.#.",
+  "#####.##.#.##.###.##",
+  "..#####..#.#########",
+  "####################",
+  "#.####....###.#.#.##",
+  "##.#################",
+  "#####.##.###..####..",
+  "..######..##.#######",
+  "####.##.####...##..#",
+  ".#####..#.######.###",
+  "##...#.##########...",
+  "#.##########.#######",
+  ".####.#.###.###.#.##",
+  "....##.##.###..#####",
+  ".#.#.###########.###",
+  "#.#.#.#####.####.###",
+  "###.##.####.##.#..##"
+];
 
 describe("Jour 10 - part 01", () => {
   const map = [".#..#", ".....", "#####", "....#", "...##"];
@@ -11,8 +34,8 @@ describe("Jour 10 - part 01", () => {
   });
 
   it("trouve le nombre d'asteroides visibles par un asteroide", () => {
-    expect(asteroide(3, 4).detecteDans(map)).toBe(8);
-    expect(asteroide(4, 2).detecteDans(map)).toBe(5);
+    expect(asteroide(3, 4).compteLesDetections(map)).toBe(8);
+    expect(asteroide(4, 2).compteLesDetections(map)).toBe(5);
   });
 
   it("trouve où placer la station orbitale", () => {
@@ -37,30 +60,11 @@ describe("Jour 10 - part 01", () => {
   });
 
   it("fait l'exemple plus grand 2", () => {
-    const map = [
-      ".#..##.###...#######",
-      "##.############..##.",
-      ".#.######.########.#",
-      ".###.#######.####.#.",
-      "#####.##.#.##.###.##",
-      "..#####..#.#########",
-      "####################",
-      "#.####....###.#.#.##",
-      "##.#################",
-      "#####.##.###..####..",
-      "..######..##.#######",
-      "####.##.####...##..#",
-      ".#####..#.######.###",
-      "##...#.##########...",
-      "#.##########.#######",
-      ".####.#.###.###.#.##",
-      "....##.##.###..#####",
-      ".#.#.###########.###",
-      "#.#.#.#####.####.###",
-      "###.##.####.##.#..##"
-    ];
-
-    expect(stationOrbitale(map)).toEqual({ x: 11, y: 13, detections: 210 });
+    expect(stationOrbitale(map_11_13)).toEqual({
+      x: 11,
+      y: 13,
+      detections: 210
+    });
   });
 
   it("trouve la solution", () => {
@@ -69,5 +73,21 @@ describe("Jour 10 - part 01", () => {
       x: 19,
       y: 14
     });
+  });
+});
+
+describe("Jour 10 - part 02", () => {
+  it("scanne tous les asteroides", () => {
+    const vaporises = vaporisateur(stationOrbitale(map_11_13), map_11_13);
+
+    expect(vaporises[0]).toEqual({ x: 12, y: 1 });
+    expect(vaporises[198]).toEqual({ x: 8, y: 2 });
+  });
+
+  it("trouve la solution", () => {
+    const vaporises = vaporisateur(stationOrbitale(inputJ10), inputJ10);
+
+    const le200ieme = vaporises[198];
+    expect(le200ieme.x * 100 + le200ieme.y).toBe(305);
   });
 });

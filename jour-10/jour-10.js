@@ -1,14 +1,27 @@
 export function stationOrbitale(map) {
   let station = { x: 0, y: 0, detections: 0 };
+
   for (let x = 0; x < map[0].length; x++) {
     for (let y = 0; y < map.length; y++) {
       if (!estUnAsteroide(x, y, map)) continue;
 
-      const detections = asteroide(x, y).detecteDans(map);
+      const detections = asteroide(x, y).compteLesDetections(map);
       if (detections > station.detections) station = { x, y, detections };
     }
   }
+
   return station;
+}
+
+export function vaporisateur(stationOrbitale, map) {
+  return asteroide(stationOrbitale.x, stationOrbitale.y)
+    .scanLesDetections(map)
+    .sort(
+      (a1, a2) =>
+        Math.atan2(-a1.x + stationOrbitale.x, a1.y - stationOrbitale.y) -
+        Math.atan2(-a2.x + stationOrbitale.x, a2.y - stationOrbitale.y)
+    )
+    .map(a => ({ x: a.x, y: a.y }));
 }
 
 export function asteroide(x, y) {
@@ -25,15 +38,19 @@ export function asteroide(x, y) {
         : leMemeX(xA, xB, yA, yB, map);
     },
 
-    detecteDans(map) {
-      let detections = 0;
+    compteLesDetections(map) {
+      return this.scanLesDetections(map).length;
+    },
+
+    scanLesDetections(map) {
+      let detections = [];
       for (let xB = 0; xB < map[0].length; xB++) {
         for (let yB = 0; yB < map.length; yB++) {
           const maPosition = x === xB && y === yB;
           if (maPosition) continue;
 
           if (estUnAsteroide(xB, yB, map) && this.voit(asteroide(xB, yB), map))
-            detections++;
+            detections.push(asteroide(xB, yB));
         }
       }
 
