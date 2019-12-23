@@ -1,32 +1,49 @@
 export const PositionParameter = adresse => ({
-  value: programme => programme[adresse]
+  value: memoire => memoire.get(adresse)
 });
 export const ImmediateParameter = adresseDuParametre => ({
   value: () => adresseDuParametre
 });
 
-const PARAMETRE_PAR_MODE = { 0: PositionParameter, 1: ImmediateParameter };
+export const RELATIVE_BASE = {
+  _value: 0,
+  value() {
+    return this._value;
+  },
+  update(value) {
+    this._value += value;
+  }
+};
+export const RelativeParameter = adresse => ({
+  value: memoire => memoire.get(adresse) + RELATIVE_BASE.value()
+});
 
-export function getUnParametre(programme, adresse) {
-  const modeP1 = intCodeSur5(programme[adresse])[2];
-  return PARAMETRE_PAR_MODE[modeP1](adresse + 1).value(programme);
+const PARAMETRE_PAR_MODE = {
+  0: PositionParameter,
+  1: ImmediateParameter,
+  2: RelativeParameter
+};
+
+export function getUnParametre(memoire, adresse) {
+  const modeP1 = intCodeSur5(memoire.get(adresse))[2];
+  return PARAMETRE_PAR_MODE[modeP1](adresse + 1).value(memoire);
 }
 
-export function getDeuxParametres(programme, adresse) {
-  const modeP1 = intCodeSur5(programme[adresse])[2];
-  const modeP2 = intCodeSur5(programme[adresse])[1];
+export function getDeuxParametres(memoire, adresse) {
+  const modeP1 = intCodeSur5(memoire.get(adresse))[2];
+  const modeP2 = intCodeSur5(memoire.get(adresse))[1];
   return [
-    PARAMETRE_PAR_MODE[modeP1](adresse + 1).value(programme),
-    PARAMETRE_PAR_MODE[modeP2](adresse + 2).value(programme)
+    PARAMETRE_PAR_MODE[modeP1](adresse + 1).value(memoire),
+    PARAMETRE_PAR_MODE[modeP2](adresse + 2).value(memoire)
   ];
 }
 
-export function getTroisParametres(programme, adresse) {
-  const [modeP3, modeP2, modeP1] = intCodeSur5(programme[adresse]);
+export function getTroisParametres(memoire, adresse) {
+  const [modeP3, modeP2, modeP1] = intCodeSur5(memoire.get(adresse));
   return [
-    PARAMETRE_PAR_MODE[modeP1](adresse + 1).value(programme),
-    PARAMETRE_PAR_MODE[modeP2](adresse + 2).value(programme),
-    PARAMETRE_PAR_MODE[modeP3](adresse + 3).value(programme)
+    PARAMETRE_PAR_MODE[modeP1](adresse + 1).value(memoire),
+    PARAMETRE_PAR_MODE[modeP2](adresse + 2).value(memoire),
+    PARAMETRE_PAR_MODE[modeP3](adresse + 3).value(memoire)
   ];
 }
 

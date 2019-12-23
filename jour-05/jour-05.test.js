@@ -1,4 +1,4 @@
-import { ADRESSE_DEPART, executer } from "./jour-05";
+import { ADRESSE_DEPART, enRam, executer } from "./jour-05";
 import { inputJ5 } from "./input";
 import {
   getDeuxParametres,
@@ -17,7 +17,7 @@ describe("Jour 5 - part 01", () => {
   describe("paramètres d'instruction", () => {
     it("crée les paramètres d'une opération à 3 paramètre", () => {
       const programme = [1002, 4, 3, 4, 33];
-      const parametres = getTroisParametres(programme, ADRESSE_DEPART);
+      const parametres = getTroisParametres(enRam(programme), ADRESSE_DEPART);
       expect(programme[parametres[0]]).toBe(33);
       expect(programme[parametres[1]]).toBe(3);
       expect(programme[parametres[2]]).toBe(33);
@@ -25,14 +25,14 @@ describe("Jour 5 - part 01", () => {
 
     it("crée les paramètres d'une opération à 2 paramètres", () => {
       const programme = toMemory("1002,4,3,4,21");
-      const parametres = getDeuxParametres(programme, ADRESSE_DEPART);
+      const parametres = getDeuxParametres(enRam(programme), ADRESSE_DEPART);
       expect(programme[parametres[0]]).toBe(21);
       expect(programme[parametres[1]]).toBe(3);
     });
 
     it("crée le paramètre d'un instruction à 1 paramètre", () => {
       const programme = toMemory("4,50");
-      const parametre = getUnParametre(programme, ADRESSE_DEPART);
+      const parametre = getUnParametre(enRam(programme), ADRESSE_DEPART);
       expect(parametre).toBe(50);
     });
   });

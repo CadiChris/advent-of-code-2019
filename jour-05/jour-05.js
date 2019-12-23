@@ -1,19 +1,31 @@
 import { getOperation, OP_CODES } from "./operations";
 
 export const ADRESSE_DEPART = 0;
+
 export function executer(programme, { inputs, outputFn } = {}) {
-  let resultat = [...programme];
-  let instruction = getOperation(resultat, ADRESSE_DEPART, {
+  let ram = enRam(programme);
+  let instruction = getOperation(ram, ADRESSE_DEPART, {
     inputs,
     outputFn
   });
+
   while (instruction.opcode !== OP_CODES.HALT) {
     const { operation } = instruction;
-    operation.executer(resultat);
-    instruction = getOperation(resultat, operation.nextAdresse(), {
+    operation.executer(ram);
+    instruction = getOperation(ram, operation.nextAdresse(), {
       inputs,
       outputFn
     });
   }
-  return resultat;
+
+  return ram.contenu();
+}
+
+export function enRam(programme) {
+  const copie = [...programme];
+  return {
+    get: adresse => copie[adresse] || 0,
+    set: (adresse, valeur) => (copie[adresse] = valeur),
+    contenu: () => copie
+  };
 }
