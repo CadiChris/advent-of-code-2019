@@ -40,10 +40,29 @@ export function creeLune(coords) {
     .split(",");
 
   const position = Position(
-    x.split("=").pop(),
-    y.split("=").pop(),
-    z.split("=").pop()
+    Number(x.split("=").pop()),
+    Number(y.split("=").pop()),
+    Number(z.split("=").pop())
   );
   const arret = Velocite(0, 0, 0);
   return Lune(position, arret);
+}
+
+export function systeme(coordonnes, nombreDeTours) {
+  const lunes = coordonnes.map(creeLune);
+  for (let tour = 0; tour < nombreDeTours; tour++) {
+    tick(lunes);
+  }
+  return lunes;
+}
+
+function tick(lunes) {
+  const [a, b, c, d] = lunes;
+  appliquerGravitation(a, b);
+  appliquerGravitation(a, c);
+  appliquerGravitation(a, d);
+  appliquerGravitation(b, c);
+  appliquerGravitation(b, d);
+  appliquerGravitation(c, d);
+  lunes.map(appliquerVelocite);
 }

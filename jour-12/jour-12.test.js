@@ -4,6 +4,7 @@ import {
   creeLune,
   Lune,
   Position,
+  systeme,
   Velocite
 } from "./jour-12";
 
@@ -58,5 +59,36 @@ describe("Jour 12 - part 01", () => {
     const coords = "<x=-1, y=0, z=2>";
     const lune = creeLune(coords);
     expect(lune.details()).toBe("pos=<x=-1, y=0, z=2>, vel=<x=0, y=0, z=0>");
+  });
+
+  it("fait tourner un systeme", () => {
+    const coords = [
+      "<x=-1, y=0, z=2>",
+      "<x=2, y=-10, z=-7>",
+      "<x=4, y=-8, z=8>",
+      "<x=3, y=5, z=-1>"
+    ];
+
+    const unTour = 1;
+    const lunes = systeme(coords, unTour);
+
+    expect(lunes[0].details()).toBe(
+      "pos=<x=2, y=-1, z=1>, vel=<x=3, y=-1, z=-1>"
+    );
+  });
+
+  it("fait tourner un systeme plein de fois", () => {
+    const coords = [
+      "<x=-1, y=0, z=2>",
+      "<x=2, y=-10, z=-7>",
+      "<x=4, y=-8, z=8>",
+      "<x=3, y=5, z=-1>"
+    ];
+
+    const lunes = systeme(coords, 10);
+
+    expect(lunes[0].details()).toBe(
+      "pos=<x=2, y=1, z=-3>, vel=<x=-3, y=-2, z=1>"
+    );
   });
 });
