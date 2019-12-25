@@ -1,6 +1,7 @@
 import {
   appliquerGravitation,
   appliquerVelocite,
+  creeLune,
   Lune,
   Position,
   Velocite
@@ -51,5 +52,11 @@ describe("Jour 12 - part 01", () => {
     expect(l.position.x).toBe(1);
     expect(l.position.y).toBe(2);
     expect(l.position.z).toBe(3);
+  });
+
+  it("crée une lune d'après les coordonnes", () => {
+    const coords = "<x=-1, y=0, z=2>";
+    const lune = creeLune(coords);
+    expect(lune.details()).toBe("pos=<x=-1, y=0, z=2>, vel=<x=0, y=0, z=0>");
   });
 });

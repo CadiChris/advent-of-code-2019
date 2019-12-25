@@ -32,3 +32,18 @@ export function appliquerVelocite(lune) {
   lune.position.y += lune.velocite.y;
   lune.position.z += lune.velocite.z;
 }
+
+export function creeLune(coords) {
+  const [x, y, z] = coords
+    .replace("<", "")
+    .replace(">", "")
+    .split(",");
+
+  const position = Position(
+    x.split("=").pop(),
+    y.split("=").pop(),
+    z.split("=").pop()
+  );
+  const arret = Velocite(0, 0, 0);
+  return Lune(position, arret);
+}
