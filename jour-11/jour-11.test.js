@@ -21,23 +21,22 @@ describe("Jour 11", () => {
     };
 
     let rotationOuCouleur = 0;
-
-    const robot = o => {
+    const commanderRobot = outputDuProgramme => {
       const peindre = rotationOuCouleur === 0;
       if (peindre) {
         const pinceaux = { [1]: BLANC, [0]: NOIR };
-        const couleur = pinceaux[o];
+        const couleur = pinceaux[outputDuProgramme];
         nono.peindre(couleur);
         rotationOuCouleur = 1;
       } else {
-        const angle = o === 0 ? 270 : 90;
+        const angle = outputDuProgramme === 0 ? 270 : 90;
         nono.deplacer(angle);
         rotationOuCouleur = 0;
       }
     };
 
     const programme = toMemory(inputJ11);
-    executer(programme, { inputs: inputCamera, outputFn: robot });
+    executer(programme, { inputs: inputCamera, outputFn: commanderRobot });
 
     expect(ship.peinture()).toBe(1747);
 
