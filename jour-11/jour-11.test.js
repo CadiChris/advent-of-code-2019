@@ -20,6 +20,9 @@ describe("Jour 11", () => {
           const codes = { [BLANC]: 1, [NOIR]: 0 };
           const couleurSurvolee = codes[terrain.get(this.position)];
           return { couleurSurvolee };
+        },
+        peindre(couleur) {
+          terrain.peindre(this.position, couleur);
         }
       };
     };
@@ -35,10 +38,11 @@ describe("Jour 11", () => {
     let rotationOuCouleur = 0;
 
     const robot = o => {
-      const pinceaux = { [1]: BLANC, [0]: NOIR };
       const peindre = rotationOuCouleur === 0;
       if (peindre) {
-        ship.peindre(positionDuRobot, pinceaux[o]);
+        const pinceaux = { [1]: BLANC, [0]: NOIR };
+        const couleur = pinceaux[o];
+        nono.peindre(couleur);
         rotationOuCouleur = 1;
       } else {
         positionDuRobot.orientation =
