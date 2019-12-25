@@ -13,17 +13,20 @@ describe("Jour 11", () => {
   });
 
   it("trouve la solution", () => {
-    const Robot = () => ({
-      camera() {
-        const codes = { [BLANC]: 1, [NOIR]: 0 };
-        const couleurSurvolee = codes[ship.get(positionDuRobot)];
-        return { couleurSurvolee };
-      }
-    });
+    const Robot = () => {
+      return {
+        position: { x: 0, y: 0, orientation: 0 },
+        camera() {
+          const codes = { [BLANC]: 1, [NOIR]: 0 };
+          const couleurSurvolee = codes[ship.get(this.position)];
+          return { couleurSurvolee };
+        }
+      };
+    };
 
     const nono = Robot();
 
-    const positionDuRobot = { x: 0, y: 0, orientation: 0 };
+    const positionDuRobot = nono.position;
     const inputCamera = {
       nextValue: () => nono.camera().couleurSurvolee
     };
