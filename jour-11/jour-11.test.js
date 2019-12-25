@@ -13,14 +13,21 @@ describe("Jour 11", () => {
   });
 
   it("trouve la solution", () => {
-    const positionDuRobot = { x: 0, y: 0, orientation: 0 };
-    const inputCamera = {
-      nextValue() {
+    const Robot = () => ({
+      camera() {
         const codes = { [BLANC]: 1, [NOIR]: 0 };
         const couleurSurvolee = codes[ship.get(positionDuRobot)];
-        return couleurSurvolee;
+        return { couleurSurvolee };
       }
+    });
+
+    const nono = Robot();
+
+    const positionDuRobot = { x: 0, y: 0, orientation: 0 };
+    const inputCamera = {
+      nextValue: () => nono.camera().couleurSurvolee
     };
+
     const ship = Grille();
     let rotationOuCouleur = 0;
 
