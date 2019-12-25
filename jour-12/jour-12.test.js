@@ -2,6 +2,7 @@ import {
   appliquerGravitation,
   appliquerVelocite,
   creeLune,
+  energie,
   Lune,
   Position,
   systeme,
@@ -90,5 +91,28 @@ describe("Jour 12 - part 01", () => {
     expect(lunes[0].details()).toBe(
       "pos=<x=2, y=1, z=-3>, vel=<x=-3, y=-2, z=1>"
     );
+  });
+
+  it("calcule l'énergie du système", () => {
+    const coords = [
+      "<x=-1, y=0, z=2>",
+      "<x=2, y=-10, z=-7>",
+      "<x=4, y=-8, z=8>",
+      "<x=3, y=5, z=-1>"
+    ];
+
+    const lunes = systeme(coords, 10);
+    expect(energie(lunes)).toBe(179);
+  });
+
+  it("trouve la solution", () => {
+    const coords = [
+      "<x=4, y=12, z=13>",
+      "<x=-9, y=14, z=-3>",
+      "<x=-7, y=-1, z=2>",
+      "<x=-11, y=17, z=-1>"
+    ];
+
+    expect(energie(systeme(coords, 1000))).toBe(5350);
   });
 });

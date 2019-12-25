@@ -5,7 +5,14 @@ export const Lune = (position, velocite) => ({
     const pos = `x=${position.x}, y=${position.y}, z=${position.z}`;
     const vel = `x=${velocite.x}, y=${velocite.y}, z=${velocite.z}`;
     return `pos=<${pos}>, vel=<${vel}>`;
-  }
+  },
+  energieTotale() {
+    return this.energiePotentielle() * this.energieKinetic();
+  },
+  energiePotentielle: () =>
+    Math.abs(position.x) + Math.abs(position.y) + Math.abs(position.z),
+  energieKinetic: () =>
+    Math.abs(velocite.x) + Math.abs(velocite.y) + Math.abs(velocite.z)
 });
 
 export const Position = (x, y, z) => ({ x, y, z });
@@ -65,4 +72,8 @@ function tick(lunes) {
   appliquerGravitation(b, d);
   appliquerGravitation(c, d);
   lunes.map(appliquerVelocite);
+}
+
+export function energie(lunes) {
+  return lunes.reduce((total, l) => total + l.energieTotale(), 0);
 }
