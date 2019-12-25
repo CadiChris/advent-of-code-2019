@@ -1,10 +1,10 @@
 import { toMemory } from "../jour-05/jour-05.test";
 import { inputJ11 } from "./input";
 import { executer } from "../jour-05/jour-05";
-import { BLANC, NOIR, Terrain } from "./jour-11";
+import { BLANC, NOIR, Robot, Terrain } from "./jour-11";
 
 describe("Jour 11", () => {
-  it("manipute la grille", () => {
+  it("manipute le terrain", () => {
     const grille = Terrain();
     grille.peindre({ x: 0, y: 0 }, BLANC);
 
@@ -13,28 +13,6 @@ describe("Jour 11", () => {
   });
 
   it("trouve la solution", () => {
-    const Robot = terrain => {
-      return {
-        position: { x: 0, y: 0, orientation: 0 },
-        camera() {
-          const codes = { [BLANC]: 1, [NOIR]: 0 };
-          const couleurSurvolee = codes[terrain.get(this.position)];
-          return { couleurSurvolee };
-        },
-        peindre(couleur) {
-          terrain.peindre(this.position, couleur);
-        },
-        deplacer(angle) {
-          this.position.orientation = (this.position.orientation + angle) % 360;
-          const { orientation } = this.position;
-          if (orientation === 0) this.position.y += 1;
-          else if (orientation === 90) this.position.x += 1;
-          else if (orientation === 180) this.position.y -= 1;
-          else if (orientation === 270) this.position.x -= 1;
-        }
-      };
-    };
-
     const ship = new Terrain();
     const nono = new Robot(ship);
 

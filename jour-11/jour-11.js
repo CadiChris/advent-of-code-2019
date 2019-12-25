@@ -1,3 +1,25 @@
+export const Robot = terrain => {
+  return {
+    position: { x: 0, y: 0, orientation: 0 },
+    camera() {
+      const codes = { [BLANC]: 1, [NOIR]: 0 };
+      const couleurSurvolee = codes[terrain.get(this.position)];
+      return { couleurSurvolee };
+    },
+    peindre(couleur) {
+      terrain.peindre(this.position, couleur);
+    },
+    deplacer(angle) {
+      this.position.orientation = (this.position.orientation + angle) % 360;
+      const { orientation } = this.position;
+      if (orientation === 0) this.position.y += 1;
+      else if (orientation === 90) this.position.x += 1;
+      else if (orientation === 180) this.position.y -= 1;
+      else if (orientation === 270) this.position.x -= 1;
+    }
+  };
+};
+
 export const Terrain = () => {
   const cellules = new Map();
   let xMax = 0,
@@ -32,4 +54,5 @@ export const Terrain = () => {
   };
 };
 export const BLANC = "⬜";
+
 export const NOIR = "⬛";
