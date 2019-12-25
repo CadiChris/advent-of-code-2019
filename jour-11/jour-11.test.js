@@ -26,20 +26,11 @@ describe("Jour 11", () => {
         },
         deplacer(angle) {
           this.position.orientation = (this.position.orientation + angle) % 360;
-          switch (this.position.orientation) {
-            case 0:
-              this.position.y += 1;
-              break;
-            case 90:
-              this.position.x += 1;
-              break;
-            case 180:
-              this.position.y -= 1;
-              break;
-            case 270:
-              this.position.x -= 1;
-              break;
-          }
+          const { orientation } = this.position;
+          if (orientation === 0) this.position.y += 1;
+          else if (orientation === 90) this.position.x += 1;
+          else if (orientation === 180) this.position.y -= 1;
+          else if (orientation === 270) this.position.x -= 1;
         }
       };
     };
