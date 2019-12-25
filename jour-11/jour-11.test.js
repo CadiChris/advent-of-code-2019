@@ -23,6 +23,23 @@ describe("Jour 11", () => {
         },
         peindre(couleur) {
           terrain.peindre(this.position, couleur);
+        },
+        deplacer(angle) {
+          this.position.orientation = (this.position.orientation + angle) % 360;
+          switch (this.position.orientation) {
+            case 0:
+              this.position.y += 1;
+              break;
+            case 90:
+              this.position.x += 1;
+              break;
+            case 180:
+              this.position.y -= 1;
+              break;
+            case 270:
+              this.position.x -= 1;
+              break;
+          }
         }
       };
     };
@@ -30,7 +47,6 @@ describe("Jour 11", () => {
     const ship = new Terrain();
     const nono = new Robot(ship);
 
-    const positionDuRobot = nono.position;
     const inputCamera = {
       nextValue: () => nono.camera().couleurSurvolee
     };
@@ -45,23 +61,8 @@ describe("Jour 11", () => {
         nono.peindre(couleur);
         rotationOuCouleur = 1;
       } else {
-        positionDuRobot.orientation =
-          (positionDuRobot.orientation + (o === 0 ? 270 : 90)) % 360;
-
-        switch (positionDuRobot.orientation) {
-          case 0:
-            positionDuRobot.y += 1;
-            break;
-          case 90:
-            positionDuRobot.x += 1;
-            break;
-          case 180:
-            positionDuRobot.y -= 1;
-            break;
-          case 270:
-            positionDuRobot.x -= 1;
-            break;
-        }
+        const angle = o === 0 ? 270 : 90;
+        nono.deplacer(angle);
         rotationOuCouleur = 0;
       }
     };
