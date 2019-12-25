@@ -1,8 +1,10 @@
 import { getOperation, OP_CODES } from "./operations";
+import { RELATIVE_BASE } from "./parametres";
 
 export const ADRESSE_DEPART = 0;
 
 export function executer(programme, { inputs, outputFn } = {}) {
+  RELATIVE_BASE.reset();
   let ram = enRam(programme);
   let instruction = getOperation(ram, ADRESSE_DEPART, {
     inputs,

@@ -7,6 +7,9 @@ export const ImmediateParameter = adresseDuParametre => ({
 
 export const RELATIVE_BASE = {
   _value: 0,
+  reset() {
+    this._value = 0;
+  },
   value() {
     return this._value;
   },

@@ -1,12 +1,12 @@
 import { inputJ7 } from "./input";
 import { executer } from "../jour-05/jour-05";
-import { toMemory } from "../jour-05/jour-05.test";
+import { toInts } from "../jour-05/jour-05.test";
 import { amplifier, signalMax } from "./jour-07";
-import { combinaisonsPhases } from "./combinaisons";
+import { combinaisonsPart1 } from "./combinaisons";
 import { inputValues } from "../jour-05/operations";
 
 describe("Jour 07", () => {
-  const programme = toMemory(inputJ7);
+  const programme = toInts(inputJ7);
   it("découvre le mécanisme des amplifieurs", () => {
     const inputA = inputValues([3, 0]);
     const outputA = [];
@@ -28,13 +28,13 @@ describe("Jour 07", () => {
   });
 
   it("chaîne 5 amplificateurs", () => {
-    const programme = toMemory(
-      "3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0"
-    );
+    const programme = toInts("3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0");
     expect(amplifier([4, 3, 2, 1, 0], programme)).toBe(43210);
   });
 
   it("trouve la solution - part 01", () => {
-    expect(signalMax(combinaisonsPhases, toMemory(inputJ7))).toBe(101490);
+    expect(signalMax(combinaisonsPart1, toInts(inputJ7))).toBe(101490);
   });
 });
+
+describe("Jour 07 - part 02", () => {});

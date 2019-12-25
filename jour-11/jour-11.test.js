@@ -1,4 +1,4 @@
-import { toMemory } from "../jour-05/jour-05.test";
+import { toInts } from "../jour-05/jour-05.test";
 import { inputJ11 } from "./input";
 import { executer } from "../jour-05/jour-05";
 import { BLANC, ControleDeRobot, Robot, Terrain } from "./jour-11";
@@ -13,7 +13,7 @@ describe("Jour 11", () => {
   });
 
   it("trouve la solution", () => {
-    const programme = toMemory(inputJ11);
+    const programme = toInts(inputJ11);
 
     const ship = new Terrain();
     const nono = new Robot(ship);
