@@ -1,21 +1,15 @@
-export function Lune(position, velocite) {
-  return {
-    position,
-    velocite
-  };
-}
+export const Lune = (position, velocite) => ({
+  position,
+  velocite,
+  details: () => {
+    const pos = `x=${position.x}, y=${position.y}, z=${position.z}`;
+    const vel = `x=${velocite.x}, y=${velocite.y}, z=${velocite.z}`;
+    return `pos=<${pos}>, vel=<${vel}>`;
+  }
+});
 
-export function Position(x, y, z) {
-  return {
-    x,
-    y,
-    z
-  };
-}
-
-export function Velocite(x, y, z) {
-  return { x, y, z };
-}
+export const Position = (x, y, z) => ({ x, y, z });
+export const Velocite = (x, y, z) => ({ x, y, z });
 
 export function appliquerGravitation(luneA, luneB) {
   function surAxe(axe) {
@@ -31,4 +25,10 @@ export function appliquerGravitation(luneA, luneB) {
   surAxe("x");
   surAxe("y");
   surAxe("z");
+}
+
+export function appliquerVelocite(lune) {
+  lune.position.x += lune.velocite.x;
+  lune.position.y += lune.velocite.y;
+  lune.position.z += lune.velocite.z;
 }
