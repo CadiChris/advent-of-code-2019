@@ -20,6 +20,36 @@ export const Robot = terrain => {
   };
 };
 
+export const ControleDeRobot = robot => {
+  const TOURNER = 1;
+  const PEINDRE = 0;
+
+  let tournerOuPeindre = PEINDRE;
+
+  function peindre(codeCouleur) {
+    const pinceaux = { [1]: BLANC, [0]: NOIR };
+    const couleur = pinceaux[codeCouleur];
+    robot.peindre(couleur);
+  }
+
+  function bouger(codeAngle) {
+    const angle = codeAngle === 0 ? 270 : 90;
+    robot.deplacer(angle);
+  }
+
+  return {
+    controler(outputDuProgramme) {
+      if (tournerOuPeindre === PEINDRE) {
+        peindre(outputDuProgramme);
+        tournerOuPeindre = TOURNER;
+      } else {
+        bouger(outputDuProgramme);
+        tournerOuPeindre = PEINDRE;
+      }
+    }
+  };
+};
+
 export const Terrain = () => {
   const cellules = new Map();
   let xMax = 0,
@@ -54,5 +84,4 @@ export const Terrain = () => {
   };
 };
 export const BLANC = "⬜";
-
 export const NOIR = "⬛";
