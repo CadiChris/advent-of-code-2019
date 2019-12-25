@@ -1,11 +1,11 @@
 import { toMemory } from "../jour-05/jour-05.test";
 import { inputJ11 } from "./input";
 import { executer } from "../jour-05/jour-05";
-import { BLANC, Grille, NOIR } from "./jour-11";
+import { BLANC, NOIR, Terrain } from "./jour-11";
 
 describe("Jour 11", () => {
   it("manipute la grille", () => {
-    const grille = Grille();
+    const grille = Terrain();
     grille.peindre({ x: 0, y: 0 }, BLANC);
 
     expect(grille.get({ x: 0, y: 0 })).toBe(BLANC);
@@ -13,25 +13,25 @@ describe("Jour 11", () => {
   });
 
   it("trouve la solution", () => {
-    const Robot = () => {
+    const Robot = terrain => {
       return {
         position: { x: 0, y: 0, orientation: 0 },
         camera() {
           const codes = { [BLANC]: 1, [NOIR]: 0 };
-          const couleurSurvolee = codes[ship.get(this.position)];
+          const couleurSurvolee = codes[terrain.get(this.position)];
           return { couleurSurvolee };
         }
       };
     };
 
-    const nono = Robot();
+    const ship = new Terrain();
+    const nono = new Robot(ship);
 
     const positionDuRobot = nono.position;
     const inputCamera = {
       nextValue: () => nono.camera().couleurSurvolee
     };
 
-    const ship = Grille();
     let rotationOuCouleur = 0;
 
     const robot = o => {

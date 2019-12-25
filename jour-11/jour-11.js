@@ -1,4 +1,4 @@
-export const Grille = () => {
+export const Terrain = () => {
   const cellules = new Map();
   let xMax = 0,
     xMin = 0,
