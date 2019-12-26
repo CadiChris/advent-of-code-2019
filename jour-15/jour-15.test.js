@@ -2,6 +2,7 @@ import { toInts } from "../jour-05/jour-05.test";
 import { inputJ15_H4CK_traverse_les_murs } from "./inputJ15";
 import { inputValues } from "../jour-05/operations";
 import { executer } from "../jour-05/jour-05";
+import { oxygener, oxygenerCompletement } from "./jour-15";
 
 describe("Jour 15", () => {
   it("trouve en passant à traver les murs", () => {
@@ -67,5 +68,59 @@ describe("Jour 15", () => {
 
     const cheminLePlusCourt = 318;
     expect(labyrintheResolu.match(/\.|2/g).length).toBe(cheminLePlusCourt);
+  });
+
+  const mapComplete = [
+    "   █   █             █     █       █   █",
+    " █ █ █ █████████ ███ █ ███ █████ █ ███ █",
+    " █   █         █ █     █ █       █     █",
+    " █████████████ █ ███████ █████████████ █",
+    "           █     █   █     █       █   █",
+    " █████████ ███ ███ █ █ █ ███ █████ █ ███",
+    " █       █   █ █   █ █ █     █   █   █ █",
+    " █ █████ ███ ███ ███ █ ███████ █ █████ █",
+    "   █   █ █ █       █ █         █ █O    █",
+    "██████ █ █ █████████ ███████████ █████ █",
+    "       █ █     █     █         █ █   █ █",
+    " █ ███ █ █ ███ █ █████ █████ █ █ █ █ █ █",
+    " █   █ █   █   █ █   █     █ █ █   █ █ █",
+    " ███ █ ███ █████ █ █ █████ █ █ █████ █ █",
+    "   █ █   █ █     █ █   █   █ █     █ █ █",
+    "██ █ ███ █ █ █████ █████ ███ █ █████ █ █",
+    " █ █ █   █ █     █       █ █ █ █     █ █",
+    " █ █ █████ █████ ███████ █ █ ███ █████ █",
+    " █ █     █ █   █   █   █   █   █ █     █",
+    " █ █████ █ █ █████ █ █ █ █████ █ █ ███ █",
+    "   █   █   █     █ █ █ █ █   █   █   █ █",
+    " ███ █ █████ █ █ █ ███ ███ █ █ █████ █ █",
+    " █   █   █   █ █ █   █     █ █   █   █ █",
+    " █████ █ █████ ███ █ ███████ ███ █ ███ █",
+    " █     █     █ █   █ █     █   █   █   █",
+    " █ █████████ █ █ █████ ███ ███ ███ █████",
+    "   █       █ █ █     █ █     █ █   █   █",
+    "████ █ █████ █ █████ █ █ ███ █ █████ █ █",
+    " █   █     █       █   █   █ █       █ █",
+    " █ ███████ ███████ ███████ ███████████ █",
+    " █     █ █       █ █     █   █         █",
+    " █████ █ ███████ █ █████ ███ █ █████████",
+    " █   █     █   █ █ █   █   █   █       █",
+    " █ █ █████ █ █ █ █ █ █ ███ █████████ █ █",
+    "   █     █   █ █ █ █ █           █   █ █",
+    " ███ █████████ █ █ █ ███████████ █ ███ █",
+    "   █         █ █   █ █     █     █ █ █ █",
+    "██ █████ █████ █████ █ ███ █ █████ █ █ █",
+    "       █             █   █         █   █"
+  ];
+
+  it("calcule l'oxygène", () => {
+    const OXYGENE = "O";
+    expect(mapComplete[8][34]).toBe(OXYGENE);
+
+    expect(oxygener(mapComplete)[8].match(/O/g).length).toBe(2);
+  });
+
+  it("oxygene à fond", () => {
+    const tempsNecessaire = oxygenerCompletement(mapComplete);
+    expect(tempsNecessaire).toBe(390);
   });
 });
