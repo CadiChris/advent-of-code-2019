@@ -1,5 +1,5 @@
 export const PositionParameter = adresse => ({
-  value: memoire => memoire.get(adresse)
+  value: ram => ram.get(adresse)
 });
 export const ImmediateParameter = adresseDuParametre => ({
   value: () => adresseDuParametre

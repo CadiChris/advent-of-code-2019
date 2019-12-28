@@ -1,4 +1,4 @@
-import { ADRESSE_DEPART, enRam, executer } from "./jour-05";
+import { ADRESSE_DEPART, enRam, executer, ordinateur } from "./jour-05";
 import { inputJ5 } from "./input";
 import {
   getDeuxParametres,
@@ -42,7 +42,7 @@ describe("Jour 5 - part 01", () => {
   });
 
   it("exécute jusqu'à la fin - 02", () => {
-    const resultat = executer(toInts("1,1,1,4,99,5,6,0,99"));
+    const resultat = ordinateur(toInts("1,1,1,4,99,5,6,0,99")).executer();
     expect(resultat).toEqual([30, 1, 1, 4, 2, 5, 6, 0, 99]);
   });
 
