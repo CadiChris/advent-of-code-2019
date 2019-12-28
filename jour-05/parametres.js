@@ -1,8 +1,14 @@
-export const PositionParameter = adresse => ({
-  value: ram => ram.get(adresse)
+export const PositionParameter = (adresseDuParametre, ram) => ({
+  value: () => {
+    return ram.get(ram.get(adresseDuParametre));
+  },
+  write: valeur => {
+    const position = ram.get(adresseDuParametre);
+    ram.set(position, valeur);
+  }
 });
-export const ImmediateParameter = adresseDuParametre => ({
-  value: () => adresseDuParametre
+export const ImmediateParameter = (adresseDuParametre, ram) => ({
+  value: () => ram.get(adresseDuParametre)
 });
 
 export const RELATIVE_BASE = {
@@ -17,8 +23,9 @@ export const RELATIVE_BASE = {
     this._value += value;
   }
 };
-export const RelativeParameter = adresse => ({
-  value: memoire => memoire.get(adresse) + RELATIVE_BASE.value()
+export const RelativeParameter = (adresse, ram) => ({
+  value: () => ram.get(ram.get(adresse) + RELATIVE_BASE.value()),
+  write: value => ram.set(ram.get(adresse) + RELATIVE_BASE.value(), value)
 });
 
 const PARAMETRE_PAR_MODE = {
@@ -27,26 +34,26 @@ const PARAMETRE_PAR_MODE = {
   2: RelativeParameter
 };
 
-export function getUnParametre(memoire, adresse) {
-  const modeP1 = intCodeSur5(memoire.get(adresse))[2];
-  return PARAMETRE_PAR_MODE[modeP1](adresse + 1).value(memoire);
+export function getUnParametre(ram, adresse) {
+  const modeP1 = intCodeSur5(ram.get(adresse))[2];
+  return PARAMETRE_PAR_MODE[modeP1](adresse + 1, ram);
 }
 
-export function getDeuxParametres(memoire, adresse) {
-  const modeP1 = intCodeSur5(memoire.get(adresse))[2];
-  const modeP2 = intCodeSur5(memoire.get(adresse))[1];
+export function getDeuxParametres(ram, adresse) {
+  const modeP1 = intCodeSur5(ram.get(adresse))[2];
+  const modeP2 = intCodeSur5(ram.get(adresse))[1];
   return [
-    PARAMETRE_PAR_MODE[modeP1](adresse + 1).value(memoire),
-    PARAMETRE_PAR_MODE[modeP2](adresse + 2).value(memoire)
+    PARAMETRE_PAR_MODE[modeP1](adresse + 1, ram),
+    PARAMETRE_PAR_MODE[modeP2](adresse + 2, ram)
   ];
 }
 
-export function getTroisParametres(memoire, adresse) {
-  const [modeP3, modeP2, modeP1] = intCodeSur5(memoire.get(adresse));
+export function getTroisParametres(ram, adresse) {
+  const [modeP3, modeP2, modeP1] = intCodeSur5(ram.get(adresse));
   return [
-    PARAMETRE_PAR_MODE[modeP1](adresse + 1).value(memoire),
-    PARAMETRE_PAR_MODE[modeP2](adresse + 2).value(memoire),
-    PARAMETRE_PAR_MODE[modeP3](adresse + 3).value(memoire)
+    PARAMETRE_PAR_MODE[modeP1](adresse + 1, ram),
+    PARAMETRE_PAR_MODE[modeP2](adresse + 2, ram),
+    PARAMETRE_PAR_MODE[modeP3](adresse + 3, ram)
   ];
 }
 

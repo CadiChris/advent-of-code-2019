@@ -43,7 +43,7 @@ export function getOperation(ram, adresse, { inputs, outputFn }) {
 export const Add = adresse => ({
   executer(ram) {
     const [p1, p2, p3] = getTroisParametres(ram, adresse);
-    ram.set(p3, ram.get(p1) + ram.get(p2));
+    p3.write(p1.value() + p2.value());
   },
   nextAdresse: () => adresse + 4
 });
@@ -51,7 +51,7 @@ export const Add = adresse => ({
 export const Multiply = adresse => ({
   executer(ram) {
     const [p1, p2, p3] = getTroisParametres(ram, adresse);
-    ram.set(p3, ram.get(p1) * ram.get(p2));
+    p3.write(p1.value() * p2.value());
   },
   nextAdresse: () => adresse + 4
 });
@@ -62,7 +62,7 @@ export const inputValues = values => ({
 export const Input = (adresse, inputs) => ({
   executer(ram) {
     const p1 = getUnParametre(ram, adresse);
-    ram.set(p1, inputs.nextValue());
+    p1.write(inputs.nextValue());
   },
   nextAdresse: () => adresse + 2
 });
@@ -70,7 +70,7 @@ export const Input = (adresse, inputs) => ({
 export const Output = (adresse, outputFn) => ({
   executer(ram) {
     const p1 = getUnParametre(ram, adresse);
-    outputFn(ram.get(p1));
+    outputFn(p1.value());
   },
   nextAdresse: () => adresse + 2
 });
@@ -78,7 +78,7 @@ export const Output = (adresse, outputFn) => ({
 const JumpIfTrue = adresse => ({
   executer(ram) {
     const [p1, p2] = getDeuxParametres(ram, adresse);
-    if (ram.get(p1) !== 0) this._nextAdresse = ram.get(p2);
+    if (p1.value() !== 0) this._nextAdresse = p2.value();
     else this._nextAdresse = adresse + 3;
   },
   nextAdresse() {
@@ -89,7 +89,7 @@ const JumpIfTrue = adresse => ({
 const JumpIfFalse = adresse => ({
   executer(ram) {
     const [p1, p2] = getDeuxParametres(ram, adresse);
-    if (ram.get(p1) === 0) this._nextAdresse = ram.get(p2);
+    if (p1.value() === 0) this._nextAdresse = p2.value();
     else this._nextAdresse = adresse + 3;
   },
   nextAdresse() {
@@ -100,8 +100,8 @@ const JumpIfFalse = adresse => ({
 export const Equals = adresse => ({
   executer(ram) {
     const [p1, p2, p3] = getTroisParametres(ram, adresse);
-    if (ram.get(p1) === ram.get(p2)) ram.set(p3, 1);
-    else ram.set(p3, 0);
+    if (p1.value() === p2.value()) p3.write(1);
+    else p3.write(0);
   },
   nextAdresse: () => adresse + 4
 });
@@ -109,8 +109,8 @@ export const Equals = adresse => ({
 export const LessThan = adresse => ({
   executer(ram) {
     const [p1, p2, p3] = getTroisParametres(ram, adresse);
-    if (ram.get(p1) < ram.get(p2)) ram.set(p3, 1);
-    else ram.set(p3, 0);
+    if (p1.value() < p2.value()) p3.write(1);
+    else p3.write(0);
   },
   nextAdresse: () => adresse + 4
 });
@@ -118,7 +118,7 @@ export const LessThan = adresse => ({
 const AdjustRelativeBase = adresse => ({
   executer(ram) {
     const p1 = getUnParametre(ram, adresse);
-    RELATIVE_BASE.update(ram.get(p1));
+    RELATIVE_BASE.update(p1.value());
   },
   nextAdresse: () => adresse + 2
 });

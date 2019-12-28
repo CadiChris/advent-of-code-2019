@@ -1,4 +1,4 @@
-import { ADRESSE_DEPART, enRam, ordinateur } from "./jour-05";
+import { enRam, ordinateur } from "./jour-05";
 import { inputJ5 } from "./input";
 import {
   getDeuxParametres,
@@ -16,34 +16,35 @@ describe("Jour 5 - part 01", () => {
 
   describe("paramètres d'instruction", () => {
     it("crée les paramètres d'une opération à 3 paramètre", () => {
-      const programme = [1002, 4, 3, 4, 33];
-      const parametres = getTroisParametres(enRam(programme), ADRESSE_DEPART);
-      expect(programme[parametres[0]]).toBe(33);
-      expect(programme[parametres[1]]).toBe(3);
-      expect(programme[parametres[2]]).toBe(33);
+      const programme = [1002, 4, 17, 4, 33];
+      const [p1, p2, p3] = getTroisParametres(enRam(programme), 0);
+      expect(p1.value()).toBe(33);
+      expect(p2.value()).toBe(17);
+      expect(p3.value()).toBe(33);
     });
 
     it("crée les paramètres d'une opération à 2 paramètres", () => {
-      const programme = toInts("1002,4,3,4,21");
-      const parametres = getDeuxParametres(enRam(programme), ADRESSE_DEPART);
-      expect(programme[parametres[0]]).toBe(21);
-      expect(programme[parametres[1]]).toBe(3);
+      const programme = toInts("1002,4,28,4,21");
+      const [p1, p2] = getDeuxParametres(enRam(programme), 0);
+      expect(p1.value()).toBe(21);
+      expect(p2.value()).toBe(28);
     });
 
     it("crée le paramètre d'un instruction à 1 paramètre", () => {
-      const programme = toInts("4,50");
-      const parametre = getUnParametre(enRam(programme), ADRESSE_DEPART);
-      expect(parametre).toBe(50);
+      const programme = toInts("4,0");
+      const p1 = getUnParametre(enRam(programme), 0);
+      expect(p1.value()).toBe(4);
     });
   });
 
   it("exécute jusqu'à la fin - 01", () => {
-    expect(
-      ordinateur(toInts("2,3,0,3,99")).executer({
-        inputs: undefined,
-        outputFn: undefined
-      })
-    ).toEqual([2, 3, 0, 6, 99]);
+    expect(ordinateur(toInts("2,3,0,3,99")).executer()).toEqual([
+      2,
+      3,
+      0,
+      6,
+      99
+    ]);
   });
 
   it("exécute jusqu'à la fin - 02", () => {
@@ -52,10 +53,7 @@ describe("Jour 5 - part 01", () => {
   });
 
   it("exécute jusqu'à la fin", () => {
-    const resultat = ordinateur(toInts("1101,100,-1,4,0")).executer({
-      inputs: undefined,
-      outputFn: undefined
-    });
+    const resultat = ordinateur(toInts("1101,100,-1,4,0")).executer();
     expect(resultat).toEqual([1101, 100, -1, 4, 99]);
   });
 
