@@ -23,10 +23,6 @@ export const ordinateur = programme => {
   };
 };
 
-export function executer(programme, { inputs, outputFn } = {}) {
-  return ordinateur(programme).executer({ inputs, outputFn });
-}
-
 export function enRam(programme) {
   const copie = [...programme];
   return {

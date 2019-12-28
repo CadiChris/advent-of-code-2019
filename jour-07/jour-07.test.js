@@ -1,5 +1,5 @@
 import { inputJ7 } from "./input";
-import { executer } from "../jour-05/jour-05";
+import { ordinateur } from "../jour-05/jour-05";
 import { toInts } from "../jour-05/jour-05.test";
 import { amplifier, signalMax } from "./jour-07";
 import { combinaisonsPart1 } from "./combinaisons";
@@ -12,12 +12,12 @@ describe("Jour 07", () => {
     const outputA = [];
     const recordA = o => outputA.push(o);
 
-    executer(programme, { inputs: inputA, outputFn: recordA });
+    ordinateur(programme).executer({ inputs: inputA, outputFn: recordA });
 
     const inputB = inputValues([1, outputA.pop()]);
     const outputB = [];
     const recordB = o => outputB.push(o);
-    executer(programme, { inputs: inputB, outputFn: recordB });
+    ordinateur(programme).executer({ inputs: inputB, outputFn: recordB });
 
     expect(outputB.pop()).toEqual(281);
   });

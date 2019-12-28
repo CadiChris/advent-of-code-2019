@@ -1,6 +1,6 @@
 import { toInts } from "../jour-05/jour-05.test";
 import { inputJ11 } from "./input";
-import { executer } from "../jour-05/jour-05";
+import { ordinateur } from "../jour-05/jour-05";
 import { BLANC, ControleDeRobot, Robot, Terrain } from "./jour-11";
 
 describe("Jour 11", () => {
@@ -22,7 +22,7 @@ describe("Jour 11", () => {
       nextValue: () => nono.camera().couleurSurvolee
     };
 
-    executer(programme, {
+    ordinateur(programme).executer({
       inputs: inputCamera,
       outputFn: ControleDeRobot(nono).controler
     });

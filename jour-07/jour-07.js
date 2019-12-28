@@ -1,4 +1,4 @@
-import { executer } from "../jour-05/jour-05";
+import { ordinateur } from "../jour-05/jour-05";
 import { inputValues } from "../jour-05/operations";
 
 export function amplifier(phases, programme) {
@@ -6,7 +6,7 @@ export function amplifier(phases, programme) {
     const output = [];
     const recordOutput = o => output.push(o);
 
-    executer(programme, {
+    ordinateur(programme).executer({
       inputs: inputValues([phase, outputPrecedent]),
       outputFn: recordOutput
     });

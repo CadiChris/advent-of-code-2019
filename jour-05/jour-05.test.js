@@ -1,4 +1,4 @@
-import { ADRESSE_DEPART, enRam, executer, ordinateur } from "./jour-05";
+import { ADRESSE_DEPART, enRam, ordinateur } from "./jour-05";
 import { inputJ5 } from "./input";
 import {
   getDeuxParametres,
@@ -38,7 +38,12 @@ describe("Jour 5 - part 01", () => {
   });
 
   it("exécute jusqu'à la fin - 01", () => {
-    expect(executer(toInts("2,3,0,3,99"))).toEqual([2, 3, 0, 6, 99]);
+    expect(
+      ordinateur(toInts("2,3,0,3,99")).executer({
+        inputs: undefined,
+        outputFn: undefined
+      })
+    ).toEqual([2, 3, 0, 6, 99]);
   });
 
   it("exécute jusqu'à la fin - 02", () => {
@@ -47,7 +52,10 @@ describe("Jour 5 - part 01", () => {
   });
 
   it("exécute jusqu'à la fin", () => {
-    const resultat = executer(toInts("1101,100,-1,4,0"));
+    const resultat = ordinateur(toInts("1101,100,-1,4,0")).executer({
+      inputs: undefined,
+      outputFn: undefined
+    });
     expect(resultat).toEqual([1101, 100, -1, 4, 99]);
   });
 
@@ -57,7 +65,10 @@ describe("Jour 5 - part 01", () => {
     const outputs = [];
     const recordOutputs = o => outputs.push(o);
 
-    executer(programme, { inputs: inputUN, outputFn: recordOutputs });
+    ordinateur(programme).executer({
+      inputs: inputUN,
+      outputFn: recordOutputs
+    });
 
     expect(outputs.pop()).toEqual(13547311);
   });
@@ -70,7 +81,7 @@ describe("Jour 05 - part 02", () => {
     const outputs = [];
     const recordOutputs = o => outputs.push(o);
 
-    executer(programme, { inputs: input8, outputFn: recordOutputs });
+    ordinateur(programme).executer({ inputs: input8, outputFn: recordOutputs });
 
     expect(outputs.pop()).toBe(1);
   });
@@ -81,7 +92,7 @@ describe("Jour 05 - part 02", () => {
     const outputs = [];
     const recordOutputs = o => outputs.push(o);
 
-    executer(programme, { inputs: input7, outputFn: recordOutputs });
+    ordinateur(programme).executer({ inputs: input7, outputFn: recordOutputs });
 
     expect(outputs.pop()).toBe(1);
   });
@@ -92,7 +103,7 @@ describe("Jour 05 - part 02", () => {
     const outputs = [];
     const recordOutputs = o => outputs.push(o);
 
-    executer(programme, { inputs: input0, outputFn: recordOutputs });
+    ordinateur(programme).executer({ inputs: input0, outputFn: recordOutputs });
 
     expect(outputs.pop()).toBe(0);
   });
@@ -103,7 +114,7 @@ describe("Jour 05 - part 02", () => {
     const outputs = [];
     const recordOutputs = o => outputs.push(o);
 
-    executer(programme, { inputs: input0, outputFn: recordOutputs });
+    ordinateur(programme).executer({ inputs: input0, outputFn: recordOutputs });
 
     expect(outputs.pop()).toBe(0);
   });
@@ -116,7 +127,10 @@ describe("Jour 05 - part 02", () => {
     const outputs = [];
     const recordOutputs = o => outputs.push(o);
 
-    executer(programme, { inputs: inputPlusQue8, outputFn: recordOutputs });
+    ordinateur(programme).executer({
+      inputs: inputPlusQue8,
+      outputFn: recordOutputs
+    });
 
     expect(outputs.pop()).toBe(1001);
   });
@@ -127,7 +141,7 @@ describe("Jour 05 - part 02", () => {
     const outputs = [];
     const recordOutputs = o => outputs.push(o);
 
-    executer(programme, { inputs: input5, outputFn: recordOutputs });
+    ordinateur(programme).executer({ inputs: input5, outputFn: recordOutputs });
 
     expect(outputs.pop()).toBe(236453);
   });

@@ -1,5 +1,5 @@
 import { toInts } from "../jour-05/jour-05.test";
-import { executer } from "../jour-05/jour-05";
+import { ordinateur } from "../jour-05/jour-05";
 import { inputJ9 } from "./input";
 import { inputValues } from "../jour-05/operations";
 
@@ -10,7 +10,7 @@ describe("Jour 09 - part 01", () => {
     const outputs = [];
     const recordOutput = o => outputs.push(o);
 
-    executer(programme, { outputFn: recordOutput });
+    ordinateur(programme).executer({ outputFn: recordOutput });
 
     expect(outputs.join(",")).toEqual(code);
   });
@@ -20,7 +20,7 @@ describe("Jour 09 - part 01", () => {
     const outputs = [];
     const recordOutput = o => outputs.push(o);
 
-    executer(programme, { outputFn: recordOutput });
+    ordinateur(programme).executer({ outputFn: recordOutput });
 
     const longueurDeOutput = String(outputs.pop()).length;
     expect(longueurDeOutput).toBe(16);
@@ -32,7 +32,7 @@ describe("Jour 09 - part 01", () => {
     const outputs = [];
     const recordOutput = o => outputs.push(o);
 
-    executer(programme, { outputFn: recordOutput });
+    ordinateur(programme).executer({ outputFn: recordOutput });
 
     expect(outputs.pop()).toBe(1125899906842624);
   });
@@ -43,7 +43,7 @@ describe("Jour 09 - part 01", () => {
     const outputs = [];
     const recordOutput = o => outputs.push(o);
 
-    executer(programme, { inputs, outputFn: recordOutput });
+    ordinateur(programme).executer({ inputs, outputFn: recordOutput });
 
     expect(outputs.pop()).toBe(3546494377);
   });
@@ -56,7 +56,7 @@ describe("Jour 09 - part 02", () => {
     const outputs = [];
     const recordOutput = o => outputs.push(o);
 
-    executer(programme, { inputs, outputFn: recordOutput });
+    ordinateur(programme).executer({ inputs, outputFn: recordOutput });
 
     expect(outputs.pop()).toBe(47253);
   });

@@ -1,7 +1,7 @@
 import { toInts } from "../jour-05/jour-05.test";
 import { inputJ15_H4CK_traverse_les_murs } from "./inputJ15";
 import { inputValues } from "../jour-05/operations";
-import { executer } from "../jour-05/jour-05";
+import { ordinateur } from "../jour-05/jour-05";
 import { oxygener, oxygenerCompletement } from "./jour-15";
 
 describe("Jour 15", () => {
@@ -23,7 +23,7 @@ describe("Jour 15", () => {
 
     const outputs = [];
     const recordOutput = o => outputs.push(o);
-    executer(programme, { inputs, outputFn: recordOutput });
+    ordinateur(programme).executer({ inputs, outputFn: recordOutput });
 
     const labyrintheResolu =
       "...█...█        .....█.....█    ...█   █" +
